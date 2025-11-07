@@ -95,16 +95,6 @@ export default function Login() {
                                 Login
                             </button>
                         </div>
-
-                        <div className="text-center mt-3">
-                            <button
-                                type="button"
-                                className="btn btn-link link-success text-decoration-none"
-                                onClick={() => alert("Forgot password flow")}
-                            >
-                                Forget Password?
-                            </button>
-                        </div>
                     </form>
                 </div>
             </div>
