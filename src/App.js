@@ -1,11 +1,11 @@
 import './App.css';
-import Login from "./components/Login.jsx";
+import Main from "./App.jsx";
 
 
 function App() {
   return (
     <div className="App">
-       <Login />
+       <Main />
     </div>
   );
 }
