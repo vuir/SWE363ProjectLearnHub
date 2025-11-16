@@ -3,19 +3,13 @@ import ToolBar from "./components/ToolBar";
 import { useState } from "react";
 import React from "react";
 import Person2Icon from '@mui/icons-material/Person2';
+import HomeIcon from '@mui/icons-material/Home';
+import { Link } from "react-router-dom";
 
 export default function Admin() {
-    const [sideBar,setsideBar]=useState(false)
 
-    const clike_sideBr=()=>{
-    setsideBar((prevState)=>!prevState)
-  }
   return(
      <main className="wrap">
-            <ToolBar 
-            openSideBar={clike_sideBr}
-            sideBarState={sideBar}
-            />
             <section className="info">
               <section className="info_name">
               <div className="Main_profile">
@@ -40,8 +34,10 @@ export default function Admin() {
                  <h4>email:</h4>
                 <p>s20664@kfupm.edu.sa</p>
               </div>
-                    
               </section>
+              <div className="home">
+              <button className="homeBtn"><Link to="/"><HomeIcon  style={{ fontSize: '30px', color: 'white' }}/></Link></button>
+              </div>
     </main>    
   );
 }

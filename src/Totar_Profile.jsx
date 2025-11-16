@@ -5,19 +5,14 @@ import React from "react";
 import Person2Icon from '@mui/icons-material/Person2';
 import PersonIcon from '@mui/icons-material/Person';
 import StarIcon from '@mui/icons-material/Star';
+import { Link } from "react-router-dom";
+import HomeIcon from '@mui/icons-material/Home';
 
 export default function Totor() {
-    const [sideBar,setsideBar]=useState(false)
 
-    const clike_sideBr=()=>{
-    setsideBar((prevState)=>!prevState)
-  }
   return(
      <main className="wrap">
-            <ToolBar 
-            openSideBar={clike_sideBr}
-            sideBarState={sideBar}
-            />
+           
             <section className="info">
               <section className="info_name">
               <div className="Main_profile">
@@ -55,9 +50,11 @@ export default function Totor() {
                   <span className="by"><PersonIcon/><p>Noor</p></span>
                  <h6>The seesion was good, but the voise is not clear</h6>
               </div>
-                
               </div>
               </section>
+              <div className="home">
+              <button className="homeBtn"><Link to="/"><HomeIcon  style={{ fontSize: '30px', color: 'white' }}/></Link></button>
+              </div>
               
     </main>    
   );

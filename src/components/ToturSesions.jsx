@@ -9,12 +9,12 @@ export default function ToturSesions({ seesion, index, onMutateCourse }) {
   return (
     <article className="Session-card">
       <header className="cardHeader-session">
-        <h2>{seesion.id}</h2>
-        <h2>{seesion.time}</h2>
+        <h2 className="session-title">{seesion.id}</h2>
+        <h4 className="session-time">{seesion.time}</h4>
       </header>
       <div className="cardHeader-session-totr">
       <PersonIcon/>
-      <h3>{seesion.totre}</h3>
+      <h5>{seesion.totre}</h5>
       </div>
     </article>
   );

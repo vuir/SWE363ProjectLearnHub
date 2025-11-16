@@ -6,19 +6,15 @@ import Person2Icon from '@mui/icons-material/Person2';
 import PersonIcon from '@mui/icons-material/Person';
 import StarIcon from '@mui/icons-material/Star';
 import FunctionsIcon from '@mui/icons-material/Functions';
+import { Link } from "react-router-dom";
+import HomeIcon from '@mui/icons-material/Home';
 
 export default function TotorFav() {
-    const [sideBar,setsideBar]=useState(false)
-
-    const clike_sideBr=()=>{
-    setsideBar((prevState)=>!prevState)
-  }
+ 
+  
   return(
      <main className="wrap">
-            <ToolBar 
-            openSideBar={clike_sideBr}
-            sideBarState={sideBar}
-            />
+          
             <section className="info">
               <section className="info_name">
               <div className="Main_profile">
@@ -66,6 +62,9 @@ export default function TotorFav() {
                  </div>
               </div>
               </section>
+              <div className="home">
+              <button className="homeBtn"><Link to="/"><HomeIcon  style={{ fontSize: '30px', color: 'white' }}/></Link></button>
+              </div>
               
     </main>    
   );

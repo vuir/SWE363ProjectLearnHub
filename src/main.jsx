@@ -32,11 +32,6 @@ export default function Main() {
 
   return (
     <main className="wrap">
-        <ToolBar 
-        openSideBar={clike_sideBr}
-        sideBarState={sideBar}
-        />
-
       <input id="searchBar" type="text" placeholder="Search Course/Tutor" onChange={txt=>setQurey(txt.target.value)}></input>
       <br></br>
       <div className="header-row">
@@ -60,7 +55,7 @@ export default function Main() {
       <button id="bt1">See More</button>
       </div>
       <br></br>
-      <section>
+      <section className="sessions">
         {sessions.map((seaion, idx) => (
           <ToturSesions
             key={seaion.id}

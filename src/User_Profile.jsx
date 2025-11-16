@@ -3,19 +3,14 @@ import ToolBar from "./components/ToolBar";
 import { useState } from "react";
 import React from "react";
 import Person2Icon from '@mui/icons-material/Person2';
+import { Link } from "react-router-dom";
+import HomeIcon from '@mui/icons-material/Home';
 
 export default function User() {
-    const [sideBar,setsideBar]=useState(false)
 
-    const clike_sideBr=()=>{
-    setsideBar((prevState)=>!prevState)
-  }
   return(
      <main className="wrap">
-            <ToolBar 
-            openSideBar={clike_sideBr}
-            sideBarState={sideBar}
-            />
+            
             <section className="info">
               <section className="info_name">
               <div className="Main_profile">
@@ -44,8 +39,10 @@ export default function User() {
                  <h4>Program:</h4>
                 <p>BS in Computer Science</p>
               </div>
-                    
               </section>
+              <div className="home">
+              <button className="homeBtn"><Link to="/"><HomeIcon  style={{ fontSize: '30px', color: 'white' }}/></Link></button>
+              </div>
     </main>    
   );
 }
