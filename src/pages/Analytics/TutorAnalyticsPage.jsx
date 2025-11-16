@@ -1,23 +1,21 @@
 import React from "react";
 import "./AnalyticsPage.css";
 import BarChartIcon from "@mui/icons-material/BarChart";
-import MenuIcon from "@mui/icons-material/Menu";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import HomeIcon from "@mui/icons-material/Home";
 
 export default function AnalyticsPage() {
   const stats = [
-    { id: 1, label: "Total Sessions", value: 2, icon: <BarChartIcon /> },
+    { id: 1, label: "Total Sessions", value: 4, icon: <BarChartIcon /> },
     { id: 2, label: "Total Enrollments", value: 20, icon: <BarChartIcon /> },
     { id: 3, label: "Average Rating", value: 4.5, icon: <BarChartIcon /> },
-    { id: 4, label: "Active Tutors", value: 5, icon: <BarChartIcon /> },
+    { id: 4, label: "Subject", value: "Math 101", icon: <BarChartIcon /> },
   ];
 
   const subjects = [
-    { id: 1, name: "MATH 101", height: "20%" },
-    { id: 2, name: "PHYS 102", height: "25%" },
-    { id: 3, name: "ICS 104", height: "60%" },
-    { id: 4, name: "CHEM 101", height: "35%" },
+    { id: 1, name: "Session 1", height: "20%" },
+    { id: 2, name: "Session 2", height: "25%" },
+    { id: 3, name: "Session 3", height: "60%" },
+    { id: 4, name: "Session 4", height: "35%" },
   ];
 
   return (
@@ -51,7 +49,7 @@ export default function AnalyticsPage() {
 
           {/* Sessions by Subject */}
           <div className="analytics-section">
-            <h3 className="analytics-section-title mb-3">Sessions by Subject</h3>
+            <h3 className="analytics-section-title mb-3">Sessions Rate</h3>
             <div className="d-flex justify-content-between">
               {subjects.map((subject) => (
                 <div key={subject.id} className="analytics-subject-card">
