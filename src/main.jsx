@@ -5,7 +5,7 @@ import CourseCard from "./components/CourseCard";
 import ToturSesions from "./components/ToturSesions";
 import ToolBar from "./components/ToolBar";
 import "./index.css";
-import "./App.css"
+import './Main_profiles.css';
 import SearchIcon from '@mui/icons-material/Search';
 
 

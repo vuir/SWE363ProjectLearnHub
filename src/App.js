@@ -1,4 +1,4 @@
-import './App.css';
+import './Main_profiles.css';
 import Main from "./main.jsx";
 import Admin from "./Admin_Profile.jsx"
 import User from './User_Profile.jsx';
