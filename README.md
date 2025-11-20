@@ -32,6 +32,7 @@ Each user type has its own credentials and access level within the system.
   Login Credentials:
     - Email: admin@kfupm.edu.sa
     - Password: admin123
+      
 Access:
 - Approve and manage tutors
 - Manage course listings
@@ -41,6 +42,7 @@ Access:
   Login Credentials:
     - Email: tutor@kfupm.edu.sa
     - Password: tutor123
+      
 Access:
 - Create and manage tutoring sessions
 - Share learning materials and resources
@@ -50,6 +52,7 @@ Access:
     Login Credentials:
     - Email: student@kfupm.edu.sa
     - Password: student123
+      
 Access:
 - Search for tutors by course
 - Join tutoring sessions
