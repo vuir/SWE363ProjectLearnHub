@@ -16,10 +16,7 @@ import Main_student from './pages/Main/main_student.jsx';
 import Main_totre from './pages/Main/main_totre.jsx';
 import Courses from './pages/Courses/Courses.jsx';
 import Favorites from './pages/Favorites/Favorites.jsx';
-import ApplySession from './pages/ApplySession/ApplySession.jsx';
-import JoinSession from './pages/ApplySession/JoinSession.jsx';
-import RatingSession from './pages/ApplySession/RatingSession.jsx';
-import AdminApplySession from './pages/ApplySession/AdminApplySession.jsx';
+ 
  
  
  
@@ -32,22 +29,16 @@ function App() {
     <BrowserRouter>
       <Routes>
        <Route path="/" element={<Login />} />
-        <Route path="/main" element={<Main_student />} />
+        <Route path="/student" element={<Main_student />} />
        <Route path="/notifications" element={<Notification />} />
        <Route path="/profile" element={<User />} />
        <Route path="/admin/analytics" element={<AdminAnalyticsPage />} />
        <Route path="/tutor/analytics" element={<TutorAnalyticsPage />} />
        <Route path="/courses" element={<Courses />} />
        <Route path="/favorites" element={<Favorites />} />
-       <Route path="/apply-session" element={<ApplySession />} />
-       <Route path="/join-session" element={<JoinSession />} />
-       <Route path="/rating-session" element={<RatingSession />} />
-       <Route path="/admin-apply-session" element={<AdminApplySession />} />
       </Routes>
     </BrowserRouter>
   );
 }
  
 export default App;
- 
- 

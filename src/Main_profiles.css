@@ -396,3 +396,12 @@
   #searchBar{ width: 100%; }
   .grid{ grid-template-columns: 1fr; }
 }
+
+.cards_link_c{
+  text-decoration: none;
+  color:var(--ink-dim);
+}
+.cards_link_s{
+  text-decoration: none;
+  color:#fff;
+}
