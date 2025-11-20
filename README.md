@@ -34,10 +34,10 @@ Login Credentials:
 - Email: admin@kfupm.edu.sa
 - Password: admin123
   
-Access:
-- Approve and manage tutors
-- Manage course listings
-- Oversee all activities and ensure platform quality
+  Access:
+  - Approve and manage tutors
+  - Manage course listings
+  - Oversee all activities and ensure platform quality
 
 
 2. Tutor
