@@ -133,3 +133,21 @@
   color: #6b7280;
   padding: 24px 0;
 }
+/* i added this to allen css to get the heart*/
+.heartBtn_toter{
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: transparent;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  color: #6b7280;
+}
+.heart--active { color: #ef4444; }
+.emptyMsg {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: #6b7280;
+  padding: 24px 0;
+}
