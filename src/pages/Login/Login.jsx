@@ -27,7 +27,17 @@ export default function Login() {
         setTouched({ username: true, password: true });
         if (Object.keys(errors).length) return;
         await new Promise((r) => setTimeout(r, 800));
-        navigate("/main");
+        const { username, password } = form;
+
+        if (username === "admin@kfupm.edu.sa" && password === "admin123") {
+            navigate("/admin");
+      } else if (username === "tutor@kfupm.edu.sa" && password === "tutor123") {
+    navigate("/tutor");
+    } else if (username === "student@kfupm.edu.sa" && password === "student123") {
+    navigate("/student");
+  } else {
+    alert("Invalid credentials");
+  }
     };
     return (
         <div className="login-page">

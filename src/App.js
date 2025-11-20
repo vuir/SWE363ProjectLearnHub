@@ -27,13 +27,18 @@ function App() {
     <BrowserRouter>
       <Routes>
        <Route path="/" element={<Login />} />
-        <Route path="/main" element={<Main />} />
+       <Route path="/main" element={<Main />} />
        <Route path="/notifications" element={<Notification />} />
        <Route path="/profile" element={<Admin />} />
        <Route path="/admin/analytics" element={<AdminAnalyticsPage />} />
        <Route path="/tutor/analytics" element={<TutorAnalyticsPage />} />
        <Route path="/courses" element={<Courses />} />
        <Route path="/favorites" element={<Favorites />} />
+
+       <Route path="/" element={<Login />} />
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/tutor" element={<Tutor />} />
+        <Route path="/student" element={<Student />} />
       </Routes>
     </BrowserRouter>
   );
