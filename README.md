@@ -17,6 +17,7 @@ Key Features:
 - Admin Dashboard: Administrators manage tutors, courses, and oversee all activities to maintain system quality.
 
 By centralizing these interactions, Learn Hub ensures a smoother, more reliable tutoring process that saves time and promotes academic success within the university community.
+
 # Setup and installation instructions
 Follow these steps to set up Learn Hub locally:
 1. Clone the repository (https://github.com/darkwinTech/SWE363ProjectLearnHub.git)
@@ -29,10 +30,10 @@ Follow these steps to set up Learn Hub locally:
 Once the server is running, there are three types of users in Learn Hub: Admin, Tutor, and Student.
 Each user type has its own credentials and access level within the system.
 1. Admin
-  Login Credentials:
-    - Email: admin@kfupm.edu.sa
-    - Password: admin123
-      
+Login Credentials:
+- Email: admin@kfupm.edu.sa
+- Password: admin123
+  
 Access:
 - Approve and manage tutors
 - Manage course listings
