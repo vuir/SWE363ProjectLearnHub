@@ -14,6 +14,7 @@ Key Features:
 - Favorites: Save preferred tutors and courses for future sessions.
 - Interactive Tools: Tutors can share resources and organize study sessions efficiently.
 - Admin Dashboard: Administrators manage tutors, courses, and oversee all activities to maintain system quality.
+
 By centralizing these interactions, Learn Hub ensures a smoother, more reliable tutoring process that saves time and promotes academic success within the university community.
 # Setup and installation instructions.
 ## write here 
