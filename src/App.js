@@ -16,7 +16,6 @@ import Main_student from './pages/Main/main_student.jsx';
 import Main_totre from './pages/Main/main_totre.jsx';
 import Courses from './pages/Courses/Courses.jsx';
 import Favorites from './pages/Favorites/Favorites.jsx';
-import Admin_suuport from './pages/Suuport/support_admin.jsx';
  
  
  
@@ -30,8 +29,7 @@ function App() {
     <BrowserRouter>
       <Routes>
        <Route path="/" element={<Login />} />
-        <Route path="/main" element={<Main_student />} />
-        <Route path="/support" element={<Admin_suuport />} />
+        <Route path="/admin" element={<Main_student />} />
        <Route path="/notifications" element={<Notification />} />
        <Route path="/profile" element={<User />} />
        <Route path="/admin/analytics" element={<AdminAnalyticsPage />} />
