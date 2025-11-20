@@ -6,8 +6,12 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 
 import { courses } from "../../data/courses";
 import { useFavorites } from "../../data/state/useFavorites"; //
+import ToolBar from "../../components/ToolBar";
+import {toolBarData} from "../../data/toolBarData_student"
+import { useState } from "react";
 
-// Example tutors data. Replace with your real data source if you have one.
+
+
 const tutors = [
   { id: "tutor_ahmad", name: "Ahmad Alghamdi" },
   { id: "tutor_2", name: "Tutor 2" },
@@ -16,6 +20,10 @@ const tutors = [
 ];
 
 export default function Favorites() {
+  const clike_sideBr=()=>{
+    setsideBar((prevState)=>!prevState)
+  }
+  const [sideBar,setsideBar]=useState(false)
   const courseFav = useFavorites("courses");
   const tutorFav = useFavorites("tutors");
 
@@ -31,8 +39,13 @@ export default function Favorites() {
 
   return (
     <main className="fav-wrap">
+      <ToolBar
+        openSideBar={clike_sideBr}
+        sideBarState={sideBar}
+        toolBarData={toolBarData}
+        />
       <header className="fav-top">
-        <h2 className="fav-title">Hi, User</h2>
+        <h2 className="fav-title"></h2>
       </header>
 
       {/* Favorite Courses */}
