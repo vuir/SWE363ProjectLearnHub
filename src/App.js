@@ -22,7 +22,7 @@ import RatingSession from './pages/ApplySession/RatingSession.jsx';
 import AdminApplySession from './pages/ApplySession/AdminApplySession.jsx';
 import MakeAnnouncement from './pages/Admin/MakeAnnouncement.jsx';
 import Support from './pages/Admin/Support.jsx';
-import SupportReply from './pages/Support/support_admin.jsx';
+import SupportReply from './pages/Admin/SupportReply.jsx';
 import StudentSupport from './pages/Support/StudentSupport.jsx';
 import ViewApplications from './pages/Admin/ViewApplications.jsx';
 import TutorsList from './pages/Tutors/TutorsList.jsx';

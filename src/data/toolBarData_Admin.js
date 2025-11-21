@@ -1,5 +1,4 @@
 import React from "react";
-import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import AssignmentAddIcon from '@mui/icons-material/AssignmentAdd';
@@ -12,41 +11,36 @@ export const toolBarData = [
   {
     title: "My profile",
     icon:<AccountCircleIcon/>,
-    link:"/profile"
+    link:"/admin/profile"
   },
   {
-    title: "Make Announcements",
+    title: "Announcements",
     icon:<AssignmentAddIcon/>,
-    link:"h"
-  },
-    {
-   title: "Analytics",
-    icon:<AssessmentIcon/>,
-    link:"/profile"
- 
+    link:"/admin/make-announcement"
   },
   {
-   title: "Support",
-    icon:<ContactSupportIcon/>,
-    link:"/profile"
- 
+    title: "Analytics",
+    icon:<AssessmentIcon/>,
+    link:"/admin/analytics"
   },
-   {
-   title: "Calendar",
+  {
+    title: "Support",
+    icon:<ContactSupportIcon/>,
+    link:"/admin/support"
+  },
+  {
+    title: "Calendar",
     icon:<CalendarTodayIcon/>,
     link:"/general-calendar"
- 
   },
   {
-   title: "View applacations",
+    title: "View Application",
     icon:<AssignmentIcon/>,
-    link:"/profile"
- 
+    link:"/admin/view-applications"
   },
   {
-   title: "log out",
+    title: "Log out",
     icon:<LogoutIcon/>,
-    link:"/profile"
- 
+    link:"logout"
   },
 ];

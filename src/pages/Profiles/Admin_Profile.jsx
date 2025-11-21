@@ -6,8 +6,7 @@ import Person2Icon from '@mui/icons-material/Person2';
 import HomeIcon from '@mui/icons-material/Home';
 import { Link } from "react-router-dom";
 import { getHomeRoute } from "../../utils/getHomeRoute";
-
-import {toolBarData} from "../../data/toolBarData"
+import { getToolBarData } from "../../utils/getToolBarData";
 
 export default function Admin() {
 const clike_sideBr=()=>{
@@ -19,7 +18,7 @@ const [sideBar,setsideBar]=useState(false)
       <ToolBar
         openSideBar={clike_sideBr}
         sideBarState={sideBar}
-        toolBarData={toolBarData}
+        toolBarData={getToolBarData()}
         />
             <section className="info">
               <section className="info_name">

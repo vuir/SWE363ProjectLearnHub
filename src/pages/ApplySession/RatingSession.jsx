@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ToolBar from "../../components/ToolBar";
-import { toolBarData } from "../../data/toolBarData";
+import { getToolBarData } from "../../utils/getToolBarData";
 import HomeIcon from "@mui/icons-material/Home";
 import StarIcon from "@mui/icons-material/Star";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
@@ -60,7 +60,7 @@ export default function RatingSession() {
       <ToolBar
         openSideBar={click_sideBar}
         sideBarState={sideBar}
-        toolBarData={toolBarData}
+        toolBarData={getToolBarData()}
       />
 
       {/* Page Title */}

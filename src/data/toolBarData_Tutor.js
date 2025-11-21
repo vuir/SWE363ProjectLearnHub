@@ -1,13 +1,10 @@
 import React from "react";
-import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import AssignmentIcon from '@mui/icons-material/Assignment';
-import AssignmentAddIcon from '@mui/icons-material/AssignmentAdd';
-import AssessmentIcon from '@mui/icons-material/Assessment';
-import ContactSupportIcon from '@mui/icons-material/ContactSupport';
-import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
-import LogoutIcon from '@mui/icons-material/Logout';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import ContactSupportIcon from '@mui/icons-material/ContactSupport';
+import AssessmentIcon from '@mui/icons-material/Assessment';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 export const toolBarData = [
   {
@@ -21,27 +18,24 @@ export const toolBarData = [
     link:"/favorites"
   },
   {
-   title: "Calendar",
+    title: "Calendar",
     icon:<CalendarTodayIcon/>,
     link:"/general-calendar"
   },
   {
-   title: "Support",
+    title: "Support",
     icon:<ContactSupportIcon/>,
     link:"/support"
- 
-  },
-    {
-   title: "Analytics",
-    icon:<AssessmentIcon/>,
-    link:"/tutor/analytics"
- 
   },
   {
-   title: "log out",
+    title: "Analytics",
+    icon:<AssessmentIcon/>,
+    link:"/tutor/analytics"
+  },
+  {
+    title: "Log out",
     icon:<LogoutIcon/>,
-    link:"/profile"
- 
+    link:"logout"
   },
 ];
 

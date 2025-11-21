@@ -7,7 +7,7 @@ import ToolBar from "../../components/ToolBar";
 import "../../index.css";
 import "../../Main_profiles.css";
 import SearchIcon from '@mui/icons-material/Search';
-import {toolBarData} from "../../data/toolBarData"
+import { getToolBarData } from "../../utils/getToolBarData";
 import { useNavigate } from "react-router-dom";
 
 
@@ -71,7 +71,7 @@ export default function Main() {
       <ToolBar 
         openSideBar={clike_sideBr}
         sideBarState={sideBar}
-        toolBarData={toolBarData}
+        toolBarData={getToolBarData()}
         />
       <input id="searchBar" type="text" placeholder="Search Course/Tutor" onChange={txt=>setQurey(txt.target.value)}></input>
       <br></br>

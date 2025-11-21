@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import ToolBar from "../../components/ToolBar";
-import { toolBarData } from "../../data/toolBarData";
+import { getToolBarData } from "../../utils/getToolBarData";
 import HomeIcon from "@mui/icons-material/Home";
 import { getHomeRoute } from "../../utils/getHomeRoute";
 import "../../index.css";
@@ -36,7 +36,7 @@ export default function ApplySession() {
       <ToolBar
         openSideBar={click_sideBar}
         sideBarState={sideBar}
-        toolBarData={toolBarData}
+        toolBarData={getToolBarData()}
       />
 
       {/* Page Title */}

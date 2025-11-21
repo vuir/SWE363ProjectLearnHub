@@ -1,8 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import ToolBar from "./components/ToolBar";
+import ToolBar from "../../components/ToolBar";
 import HomeIcon from '@mui/icons-material/Home';
 import { Link } from "react-router-dom";
+import { getHomeRoute } from "../../utils/getHomeRoute";
+import { getToolBarData } from "../../utils/getToolBarData";
 import "./SupportReply.css";
 
 export default function SupportReply() {
@@ -10,6 +12,7 @@ export default function SupportReply() {
   const location = useLocation();
   const [sideBar, setSideBar] = useState(false);
   const [answer, setAnswer] = useState("");
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   
   // Get message data from location state or use default
   const message = location.state?.message || {
@@ -33,17 +36,26 @@ export default function SupportReply() {
     // Here you would typically send the reply to the backend
     console.log("Reply sent:", { messageId: message.id, answer });
     
-    // Show success message and navigate back
-    alert("Reply sent successfully!");
-    navigate("/admin/support");
+    // Show success message
+    setShowSuccessModal(true);
+  };
+
+  const handleOkClick = () => {
+    // Close modal and navigate to home
+    setShowSuccessModal(false);
+    navigate(getHomeRoute());
   };
 
   return (
     <main className="support-reply-wrap">
-      <ToolBar openSideBar={toggleSideBar} sideBarState={sideBar} />
+      <ToolBar 
+        openSideBar={toggleSideBar} 
+        sideBarState={sideBar}
+        toolBarData={getToolBarData()}
+      />
       
       <header className="support-reply-title-section">
-        <h1 className="support-reply-title">Support Conversations</h1>
+        <h1 className="support-reply-title">Support Conversation</h1>
       </header>
 
       {/* User's Support Message Block */}
@@ -60,7 +72,7 @@ export default function SupportReply() {
           </div>
           
           <div className="support-reply-form-group">
-            <label className="support-reply-label">message</label>
+            <label className="support-reply-label">Message</label>
             <textarea
               className="support-reply-textarea-readonly"
               value={message.message || `Issue: ${message.issue}`}
@@ -74,7 +86,7 @@ export default function SupportReply() {
       <div className="support-reply-admin-answer-container">
         <div className="support-reply-message-block">
           <div className="support-reply-form-group">
-            <label className="support-reply-label">your ansower</label>
+            <label className="support-reply-label">Your Answer</label>
             <textarea
               className="support-reply-textarea"
               placeholder="Provide as much details as possible"
@@ -93,11 +105,25 @@ export default function SupportReply() {
       {/* Home Icon at Bottom */}
       <div className="unified-home-bottom-nav">
         <button className="unified-home-btn">
-          <Link to="/admin/support">
+          <Link to={getHomeRoute()}>
             <HomeIcon />
           </Link>
         </button>
       </div>
+
+      {/* Success Modal */}
+      {showSuccessModal && (
+        <div className="success-modal-overlay">
+          <div className="success-modal">
+            <div className="success-modal-content">
+              <p className="success-modal-message">Message sent successfully.</p>
+              <button className="success-modal-ok-btn" onClick={handleOkClick}>
+                OK
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }

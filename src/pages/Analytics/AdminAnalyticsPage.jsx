@@ -5,7 +5,7 @@ import BarChartIcon from "@mui/icons-material/BarChart";
 import HomeIcon from "@mui/icons-material/Home";
 import { getHomeRoute } from "../../utils/getHomeRoute";
 import ToolBar from "../../components/ToolBar";
-import { toolBarData } from "../../data/toolBarData";
+import { getToolBarData } from "../../utils/getToolBarData";
 
 export default function AnalyticsPage() {
   const [sideBar, setSideBar] = useState(false);
@@ -33,7 +33,7 @@ export default function AnalyticsPage() {
       <ToolBar
         openSideBar={click_sideBar}
         sideBarState={sideBar}
-        toolBarData={toolBarData}
+        toolBarData={getToolBarData()}
       />
       <div className="analytics-shell">
         <div className="align-items-cente mb-3">

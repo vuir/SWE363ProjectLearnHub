@@ -180,6 +180,68 @@
   font-size: 24px;
 }
 
+/* Success Modal */
+.success-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+.success-modal {
+  background: #d7f1db;
+  border-radius: 22px;
+  padding: 32px 28px;
+  max-width: 320px;
+  width: 90%;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+  text-align: center;
+}
+
+.success-modal-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.success-modal-message {
+  font-size: 16px;
+  font-weight: 500;
+  color: #000000;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.success-modal-ok-btn {
+  background: #0B6623;
+  color: #ffffff;
+  border: none;
+  border-radius: 18px;
+  padding: 12px 48px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 8px;
+}
+
+.success-modal-ok-btn:hover {
+  background: #56B46F;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.success-modal-ok-btn:active {
+  transform: translateY(0);
+}
+
 /* Responsive adjustments */
 @media (max-width: 480px) {
   .support-reply-wrap {
@@ -204,6 +266,20 @@
   .support-reply-send-btn {
     height: 48px;
     font-size: 16px;
+  }
+
+  .success-modal {
+    padding: 28px 24px;
+    max-width: 280px;
+  }
+
+  .success-modal-message {
+    font-size: 14px;
+  }
+
+  .success-modal-ok-btn {
+    padding: 10px 40px;
+    font-size: 14px;
   }
 }
 

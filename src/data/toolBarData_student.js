@@ -3,6 +3,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import ContactSupportIcon from '@mui/icons-material/ContactSupport';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 export const toolBarData = [
   {
@@ -16,14 +17,19 @@ export const toolBarData = [
     link:"/favorites"
   },
   {
-   title: "Calendar",
+    title: "Calendar",
     icon:<CalendarTodayIcon/>,
     link:"/general-calendar"
   },
   {
-   title: "Support",
+    title: "Support",
     icon:<ContactSupportIcon/>,
     link:"/support"
+  },
+  {
+    title: "Log out",
+    icon:<LogoutIcon/>,
+    link:"logout"
   },
 ];
 
