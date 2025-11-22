@@ -67,7 +67,7 @@
   background: transparent;
   display: grid;
   place-items: center;
-  color: #ef4444;           /* outline heart color */
+  color: #ef4444;           
   cursor: pointer;
 }
 .fav-heart svg { font-size: 22px; }

@@ -26,12 +26,10 @@ export default function SubjectCourses() {
     setSideBar((prevState) => !prevState);
   };
 
-  // Get subject icon - default to CalculateIcon for MATH
   const getSubjectIcon = () => {
     return <CalculateIcon />;
   };
 
-  // Filter courses by subject and search term
   const filteredCourses = useMemo(() => {
     let list = courses.filter((c) => {
       const courseSubject = c.id.split(" ")[0];
@@ -49,7 +47,6 @@ export default function SubjectCourses() {
     return list;
   }, [subject, searchTerm]);
 
-  // Pagination
   const totalPages = Math.ceil(filteredCourses.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedCourses = filteredCourses.slice(

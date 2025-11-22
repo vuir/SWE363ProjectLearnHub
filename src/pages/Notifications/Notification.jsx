@@ -28,7 +28,7 @@ export default function Notification() {
         {
             id: 2,
             icon: <StarsIcon />,
-            title: "New features availabl",
+            title: "New features availabe",
             subtitle: "Check them out now",
             time: "11:40 AM", 
         },];

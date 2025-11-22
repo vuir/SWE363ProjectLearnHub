@@ -13,11 +13,8 @@ export default function TutorApplySession() {
   const navigate = useNavigate();
   const location = useLocation();
   
-  // Get session data from navigation state, or use defaults
   const session = location.state?.session || null;
-  // Handle both formats: from calendar (courseCode) or from sessions list (id)
   const courseCode = session?.courseCode || session?.id || "MATH101";
-  // Handle both formats: from calendar (tutorName) or from sessions list (totre)
   const tutorName = session?.tutorName || session?.totre?.replace("By ", "") || "Ahmad Alghamdi";
   const description = session?.sessionDesc || session?.description || "Description";
 
@@ -26,7 +23,6 @@ export default function TutorApplySession() {
   };
 
   const handleRegister = () => {
-    // Pass session data to Join Session page
     navigate("/join-session", {
       state: {
         session: {

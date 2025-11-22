@@ -14,13 +14,12 @@ import CloseIcon from "@mui/icons-material/Close";
 import { getHomeRoute } from "../../utils/getHomeRoute";
 import "./GeneralCalendar.css";
 
-// Sample sessions data with dates
 const sampleSessions = [
   {
     id: 1,
     tutorName: "Ahmad alghamdi",
     date: "19",
-    month: 8, // September (0-indexed, so 8 = September)
+    month: 8, 
     year: 2025,
     time: "8:00PM",
     courseCode: "Math 101",
@@ -74,13 +73,11 @@ const availableTimes = [
 
 const STORAGE_KEY = "tutor_sessions";
 
-// Helper function to find the earliest session date
 const getEarliestSessionDate = (sessions) => {
   if (!sessions || sessions.length === 0) {
     return { date: new Date(2025, 0, 1), selected: 1 };
   }
 
-  // Convert all sessions to comparable date objects and find the earliest
   const sessionDates = sessions.map(session => ({
     year: session.year,
     month: session.month,
@@ -88,7 +85,6 @@ const getEarliestSessionDate = (sessions) => {
     session: session
   }));
 
-  // Sort by year, then month, then date
   sessionDates.sort((a, b) => {
     if (a.year !== b.year) return a.year - b.year;
     if (a.month !== b.month) return a.month - b.month;
@@ -106,7 +102,6 @@ export default function GeneralCalendar() {
   const [sideBar, setSideBar] = useState(false);
   const [allSessions, setAllSessions] = useState(sampleSessions);
   
-  // Initialize with earliest session date
   const earliestSession = getEarliestSessionDate(sampleSessions);
   const [currentDate, setCurrentDate] = useState(earliestSession.date);
   const [selectedDate, setSelectedDate] = useState(earliestSession.selected);
@@ -121,9 +116,8 @@ export default function GeneralCalendar() {
   });
   const navigate = useNavigate();
   const userType = localStorage.getItem('userType');
-  const currentTutorName = "Ahmad alghamdi"; // Default tutor name, can be fetched from profile
+  const currentTutorName = "Ahmad alghamdi";
 
-  // Load sessions from localStorage on mount and update to earliest session date
   useEffect(() => {
     const savedSessions = localStorage.getItem(STORAGE_KEY);
     let allLoadedSessions = [...sampleSessions];
@@ -138,13 +132,11 @@ export default function GeneralCalendar() {
       }
     }
     
-    // Update calendar to show earliest session date
     const earliest = getEarliestSessionDate(allLoadedSessions);
     setCurrentDate(earliest.date);
     setSelectedDate(earliest.selected);
   }, []);
 
-  // Save sessions to localStorage
   const saveSessions = (sessions) => {
     const tutorSessions = sessions.filter(s => s.createdBy === currentTutorName);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(tutorSessions));
@@ -171,7 +163,6 @@ export default function GeneralCalendar() {
   };
 
   const handleSessionClick = (session) => {
-    // Transform session data to match ApplySession expected format
     const sessionData = {
       id: session.courseCode,
       totre: `By ${session.tutorName}`,
@@ -184,7 +175,6 @@ export default function GeneralCalendar() {
     navigate("/apply-session", { state: { session: sessionData } });
   };
 
-  // Get sessions for selected date
   const getSessionsForDate = () => {
     return allSessions.filter(
       (session) =>
@@ -194,7 +184,6 @@ export default function GeneralCalendar() {
     );
   };
 
-  // Get available times for selected date (exclude already booked times)
   const getAvailableTimes = () => {
     const sessionsForDate = getSessionsForDate();
     const bookedTimes = sessionsForDate.map(s => s.time);

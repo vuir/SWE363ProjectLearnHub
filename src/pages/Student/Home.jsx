@@ -36,17 +36,15 @@ export default function StudentHome() {
 
   }
 
-  // Group courses by subject (e.g., combine all ICS courses into one)
   const getUniqueSubjects = (coursesList) => {
     const subjectMap = new Map();
     coursesList.forEach(course => {
-      const subject = course.id.split(" ")[0]; // Extract subject (e.g., "ICS" from "ICS 104")
+      const subject = course.id.split(" ")[0]; 
       if (!subjectMap.has(subject)) {
-        // Use the first course of each subject as representative
         subjectMap.set(subject, {
-          id: subject, // Use just the subject name as ID
-          title: course.title, // Use first course's title
-          icon: course.icon // Use first course's icon
+          id: subject,  
+          title: course.title,
+          icon: course.icon 
         });
       }
     });

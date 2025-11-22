@@ -129,7 +129,7 @@
 
 .sessions{
   display: grid;
-  grid-template-columns: repeat(2, minmax(420px, 1fr)); /* 2 columns on desktop */
+  grid-template-columns: repeat(2, minmax(420px, 1fr)); 
   gap: 18px;
   align-items: start;
   margin-top: 10px;

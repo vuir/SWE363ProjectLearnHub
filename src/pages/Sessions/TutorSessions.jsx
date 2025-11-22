@@ -10,7 +10,7 @@ export default function TutorSessions({ seesion, index, onMutateCourse, isEditMo
   const navigate = useNavigate();
 
   const handleSessionClick = () => {
-    if (isEditMode) return; // Don't navigate in edit mode
+    if (isEditMode) return; 
     navigate("/apply-session", { state: { session: seesion } });
   };
 

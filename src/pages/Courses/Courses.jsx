@@ -19,18 +19,15 @@ export default function Courses() {
       setsideBar((prevState)=>!prevState)
     }
     const [sideBar,setsideBar]=useState(false)
-  // ---- tags (alphabetical) ----
   const tags = useMemo(() => {
     const all = Array.from(new Set(courses.map((c) => c.id.split(" ")[0])));
     return all.sort();
   }, []);
 
-  // ---- filters/search ----
   const [activeTag, setActiveTag] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
 
-  // ---- favorites via localStorage (shared with /favorites) ----
-  const courseFav = useFavorites("courses"); // keys: FAV_COURSES
+  const courseFav = useFavorites("courses"); 
 
   const filtered = useMemo(() => {
     let list = courses;

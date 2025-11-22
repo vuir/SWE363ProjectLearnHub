@@ -25,11 +25,9 @@ export default function TutorFavorites() {
     setSideBar((prevState) => !prevState);
   };
 
-  // Get tutor data from navigation state, or use default
   const tutorData = location.state?.tutor || null;
   const tutorName = tutorData?.name || "Mohamed alzhrane";
   
-  // Find the tutor in the data array
   const tutorIndex = totarDataState.findIndex(toter => 
     toter.name.toLowerCase() === tutorName.toLowerCase()
   );

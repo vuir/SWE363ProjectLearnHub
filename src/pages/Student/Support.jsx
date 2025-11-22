@@ -25,7 +25,6 @@ export default function StudentSupport() {
       alert("Please fill in both subject and message fields.");
       return;
     }
-    // Show success modal
     setShowSuccessModal(true);
   };
 

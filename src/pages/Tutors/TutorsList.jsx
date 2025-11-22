@@ -9,48 +9,12 @@ import { getToolBarData } from "../../utils/getToolBarData";
 import { getHomeRoute } from "../../utils/getHomeRoute";
 import "./TutorsList.css";
 
-// Sample tutors data with sessions - This should eventually come from a data file
 const sampleTutorSessions = [
-  {
-    id: 1,
-    tutorName: "Ahmad Alqarni",
-    date: "19 Sep",
-    time: "8:00PM",
-    courseCode: "Math 201",
-    sessionDesc: "Session: ch 2.4"
-  },
-  {
-    id: 2,
-    tutorName: "lama alghamdi",
-    date: "19 Sep",
-    time: "9:00PM",
-    courseCode: "ICS 108",
-    sessionDesc: "Session: Solving old exams"
-  },
-  {
-    id: 3,
-    tutorName: "Norh alharbie",
-    date: "20 Sep",
-    time: "3:00PM",
-    courseCode: "ICS321",
-    sessionDesc: "Session: ch 4"
-  },
-  {
-    id: 4,
-    tutorName: "Hayat Alghamdi",
-    date: "6 Oct",
-    time: "7:00PM",
-    courseCode: "CHEM101",
-    sessionDesc: "Session: ch 3.2"
-  },
-  {
-    id: 5,
-    tutorName: "Abdulaziz Alnufaie",
-    date: "10 Oct",
-    time: "8:00PM",
-    courseCode: "Math 201",
-    sessionDesc: "Session: ch 2.5"
-  }
+  { id: 1, tutorName: "Ahmad Alqarni", date: "19 Sep", time: "8:00PM", courseCode: "Math 201", sessionDesc: "Session: ch 2.4" },
+  { id: 2, tutorName: "Lama Alghamdi", date: "19 Sep", time: "9:00PM", courseCode: "ICS 108", sessionDesc: "Session: Solving old exams" },
+  { id: 3, tutorName: "Norh Alharbie", date: "20 Sep", time: "3:00PM", courseCode: "ICS 321", sessionDesc: "Session: ch 4" },
+  { id: 4, tutorName: "Hayat Alghamdi", date: "6 Oct", time: "7:00PM", courseCode: "CHEM 101", sessionDesc: "Session: ch 3.2" },
+  { id: 5, tutorName: "Abdulaziz Alnufaie", date: "10 Oct", time: "8:00PM", courseCode: "Math 201", sessionDesc: "Session: ch 2.5" },
 ];
 
 export default function TutorsList() {
@@ -62,7 +26,6 @@ export default function TutorsList() {
 
   const toggleSideBar = () => setSideBar(prev => !prev);
 
-  // Filter tutors by name
   const getFilteredTutors = (query, tutors) => {
     if (!query) {
       return tutors;
@@ -75,7 +38,6 @@ export default function TutorsList() {
 
   const filteredTutors = getFilteredTutors(searchQuery, sampleTutorSessions);
 
-  // Pagination logic
   const totalPages = Math.ceil(filteredTutors.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -87,7 +49,6 @@ export default function TutorsList() {
   };
 
   const handleTutorSessionClick = (tutor) => {
-    // Transform tutor session data to match ApplySession expected format
     const sessionData = {
       id: tutor.courseCode,
       courseCode: tutor.courseCode,
@@ -121,7 +82,7 @@ export default function TutorsList() {
               value={searchQuery}
               onChange={(e) => {
                 setSearchQuery(e.target.value);
-                setCurrentPage(1); // Reset to first page on search
+                setCurrentPage(1); 
               }}
             />
           </div>
