@@ -21,7 +21,7 @@ By centralizing these interactions, Learn Hub ensures a smoother, more reliable 
 # Setup and installation instructions
 Follow these steps to set up Learn Hub locally:
 1. Clone the repository (https://github.com/darkwinTech/SWE363ProjectLearnHub.git)
-2. Navigate to the project directory (cd learn-hub)
+2. Navigate to the project directory (cd SWE363ProjectLearnHub)
 3. Install dependencies (npm install)
 4. Start the development server (npm start)
 5. Open your browser and visit (http://localhost:3000)
@@ -63,8 +63,8 @@ Login Credentials:
 
 ## Team member names and roles.
 - Aleen Alqarni (Login page, )
-- Ghada alghamdi 
-- Hayat alghamdi
+- Ghada Alghamdi 
+- Hayat Alghamdi
 - Fatima labban
 
 
