@@ -14,6 +14,13 @@ const announcementSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  targetLevel: {
+    type: String,
+  },
+  courseId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Course',
+  },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Announcement', announcementSchema);

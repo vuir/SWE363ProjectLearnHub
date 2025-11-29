@@ -14,9 +14,6 @@ const tutorProfileSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Course',
   }],
-  availability: {
-    type: String,
-  },
   rating: {
     type: Number,
     default: 0,

@@ -26,6 +26,11 @@ const sessionSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  status: {
+    type: String,
+    enum: ['scheduled', 'completed', 'cancelled'],
+    default: 'scheduled',
+  },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Session', sessionSchema);
