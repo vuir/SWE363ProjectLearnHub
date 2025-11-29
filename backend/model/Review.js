@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
-const sessionSchema = new mongoose.Schema({
-  courseId: {
+const reviewSchema = new mongoose.Schema({
+  sessionId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Course',
+    ref: 'Session',
     required: true,
   },
   tutorId: {
@@ -11,21 +11,21 @@ const sessionSchema = new mongoose.Schema({
     ref: 'User',
     required: true,
   },
-  title: {
-    type: String,
+  studentId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
     required: true,
   },
-  description: {
-    type: String,
-  },
-  dateTime: {
-    type: Date,
+  rating: {
+    type: Number,
     required: true,
+    min: 1,
+    max: 5,
   },
-  teamsLink: {
+  comment: {
     type: String,
-    required: true,
   },
 }, { timestamps: true });
 
-module.exports = mongoose.model('Session', sessionSchema);
+module.exports = mongoose.model('Review', reviewSchema);
+

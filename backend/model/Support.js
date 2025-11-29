@@ -1,26 +1,27 @@
-export const Support = [
-  {
-    id: "SUP001",
-    name: "Ahmad Alghamdi",
-    type: "Student",
-    submittedAt: "2025-11-16 4:35 PM",
-    issue: "Unable to access course materials.",
-    status: "Pending",
+const mongoose = require('mongoose');
+
+const supportSchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
   },
-  {
-    id: "SUP002",
-    name: "Sara Mohammed",
-    type: "Student",
-    submittedAt: "2025-11-15 2:10 PM",
-    issue: "Cannot upload lecture notes.",
-    status: "Pending",
+  issue: {
+    type: String,
+    required: true,
   },
-  {
-    id: "SUP003",
-    name: "Reem Alzahrani",
-    type: "Tutor",
-    submittedAt: "2025-11-15 11:20 AM",
-    issue: "Issue adding new courses.",
-    status: "Pending",
-  }
-];
+  status: {
+    type: String,
+    enum: ['pending', 'in-progress', 'resolved'],
+    default: 'pending',
+  },
+  response: {
+    type: String,
+  },
+  respondedBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+  },
+}, { timestamps: true });
+
+module.exports = mongoose.model('Support', supportSchema);

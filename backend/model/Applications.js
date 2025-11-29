@@ -1,26 +1,25 @@
-export const Applications = [
-  {
-    id: "APP001",
-    name: "Ahmad Alghamdi",
-    course: "MATH 201",
-    grade: "A",
-    submittedAt: "2025-11-16 10:30 AM",
-    isApproved: false,
+const mongoose = require('mongoose');
+
+const applicationSchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
   },
-  {
-    id: "APP002",
-    name: "Ghada Alghamdi",
-    course: "ICS 201",
-    grade: "B+",
-    submittedAt: "2025-11-15 3:45 PM",
-    isApproved: false,
+  courseId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Course',
+    required: true,
   },
-  {
-    id: "APP003",
-    name: "Norah Alharbi",
-    course: "MATH 201",
-    grade: "A+",
-    submittedAt: "2025-11-15 7:50 PM",
-    isApproved: false,
+  grade: {
+    type: String,
+    required: true,
   },
-];
+  status: {
+    type: String,
+    enum: ['pending', 'approved', 'rejected'],
+    default: 'pending',
+  },
+}, { timestamps: true });
+
+module.exports = mongoose.model('Application', applicationSchema);
