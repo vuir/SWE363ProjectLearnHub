@@ -19,5 +19,8 @@ const bookingSchema = new mongoose.Schema({
   },
 }, { timestamps: true });
 
+
+bookingSchema.index({ sessionId: 1, studentId: 1 }, { unique: true }); //Prevent duplicate bookings
+
 module.exports = mongoose.model('Booking', bookingSchema);
 
