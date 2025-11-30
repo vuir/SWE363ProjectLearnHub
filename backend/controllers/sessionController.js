@@ -16,7 +16,7 @@ async function createSession(req, res){
     if (!mongoose.Types.ObjectId.isValid(req.body.tutorId)) {
         return [400, { "message": "tutor id is not valid." }, null];}
     try {
-        const result = await Session.create({
+        const new_session = await Session.create({
             courseId: req.body.courseId,
             tutorId: req.body.tutorId,
             description: req.body.description,
@@ -29,7 +29,7 @@ async function createSession(req, res){
         touter.coursesTaught.push(req.body.courseId);
         await touter.save();
         console.log("Session Created ");
-        return [201, { result, touter }, null];
+        return [201, { new_session, touter }, null];
     } catch (err) {
         console.log(err);
         return [500, null, null];
