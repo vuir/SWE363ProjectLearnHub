@@ -37,7 +37,7 @@ async function createAnnouncement(req, res){
         )
     );
         console.log("Announcement Created ");
-        return [201, { new_announcement, touter }, null];
+        return [201, new_announcement, null];
     } catch (err) {
         console.log(err);
         return [500, null, null];
