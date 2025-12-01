@@ -4,7 +4,18 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "seed": "node seedUsers.js"
+    "seed": "node dataSeed/seedUsers.js",
+    "seed:all": "node dataSeed/seedAll.js",
+    "seed:courses": "node dataSeed/seedCourses.js",
+    "seed:tutors": "node dataSeed/seedTutorProfiles.js",
+    "seed:sessions": "node dataSeed/seedSessions.js",
+    "seed:applications": "node dataSeed/seedApplications.js",
+    "seed:bookings": "node dataSeed/seedBookings.js",
+    "seed:reviews": "node dataSeed/seedReviews.js",
+    "seed:announcements": "node dataSeed/seedAnnouncements.js",
+    "seed:favorites": "node dataSeed/seedFavorites.js",
+    "seed:notifications": "node dataSeed/seedNotifications.js",
+    "seed:support": "node dataSeed/seedSupport.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -12,6 +23,7 @@
     "dotenv": "^16.0.0",
     "express": "^4.18.0",
     "jsonwebtoken": "^9.0.0",
+    "mongodb": "^7.0.0",
     "mongoose": "^8.0.0"
   }
 }

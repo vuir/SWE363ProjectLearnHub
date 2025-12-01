@@ -19,7 +19,34 @@ const userSchema = new mongoose.Schema({
     enum: ['student', 'tutor', 'admin'],
     required: true,
   },
+  // Admin fields
+  employeeId: {
+    type: String,
+    unique: true,
+    sparse: true, // Allows null values but enforces uniqueness for non-null values
+  },
+  department: {
+    type: String,
+  },
+  manager: {
+    type: String,
+  },
+  // Student/Tutor fields
+  studentId: {
+    type: String,
+    unique: true,
+    sparse: true, // Allows null values but enforces uniqueness for non-null values
+  },
+  college: {
+    type: String,
+  },
   major: {
+    type: String,
+  },
+  degree: {
+    type: String,
+  },
+  program: {
     type: String,
   },
   year: {
@@ -28,4 +55,3 @@ const userSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('User', userSchema);
-

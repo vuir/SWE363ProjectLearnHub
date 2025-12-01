@@ -2,29 +2,29 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const connectDB = require("./config/db");
-const authRoutes = require("./route/authRoutes");
-const courseRoutes = require("./route/courseRoutes");
 
 const app = express();
 
-// middleware
-app.use(cors({ origin: "http://localhost:3000" }));
-app.use(express.json());
-
 connectDB();
 
-// test
+// middleware
+app.use(cors({ origin: "http://localhost:3000" }));  // Allow requests from frontend
+app.use(express.json());
+
+// auth routes
+const authRoutes = require("./route/authRoutes");  
+app.use("/api/auth", authRoutes); 
+
+// support routes
+app.use('/api/support', require('./route/supportRoute'));
+
+// notification routes
+app.use("/api/notifications", require("./route/notificationRoute"));
+
+// test route
 app.get("/", (req, res) => {
-    res.json({ message: "backend is running well!" });
+	res.json({ message: "backend is running well!" });
 });
 
-// auth
-app.use("/api/auth", authRoutes);
-
-// courses
-app.use("/api/courses", courseRoutes);
-
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () =>
-    console.log(`Server running on port ${PORT}`)
-);
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
