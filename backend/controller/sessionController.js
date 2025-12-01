@@ -25,11 +25,11 @@ async function createSession(req, res){
             teamsLink: req.body.teamsLink,
             status: req.body.status,
         });
-        const touter = await Tutor.findById(req.body.tutorId);
-        touter.coursesTaught.push(req.body.courseId);
-        await touter.save();
+        // const touter = await Tutor.findById(req.body.tutorId);
+        // touter.coursesTaught.push(req.body.courseId);
+        // await touter.save();
         console.log("Session Created ");
-        return [201, { new_session, touter }, null];
+        return [201,new_session, null];
     } catch (err) {
         console.log(err);
         return [500, null, null];

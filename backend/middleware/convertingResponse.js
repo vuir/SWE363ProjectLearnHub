@@ -1,4 +1,4 @@
-function responseHandler(controller) {//to convert from an array (the output of my controlers) to .json)
+function convertingResponse(controller) {//to convert from an array (the output of my controlers) to .json)
     return async (req, res, next) => {
         const return_value = await controller(req, res);
         if (!Array.isArray(return_value)) {
@@ -9,4 +9,7 @@ function responseHandler(controller) {//to convert from an array (the output of 
     };
 }
 
-module.exports = responseHandler;
+module.exports = convertingResponse;
+
+
+
