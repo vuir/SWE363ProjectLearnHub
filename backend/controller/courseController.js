@@ -7,18 +7,39 @@ exports.getAllCourses = async (req, res) => {
     const { department, search } = req.query;
     const query = {};
 
-    // Filter by department
+    // Helper function to escape regex special characters
+    const escapeRegex = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+    // Filter by department (case-insensitive)
+    let departmentFilter = null;
     if (department) {
-      query.department = department;
+      // Decode URL-encoded spaces and make case-insensitive
+      const decodedDepartment = decodeURIComponent(department).trim();
+      const escapedDepartment = escapeRegex(decodedDepartment);
+      departmentFilter = { department: { $regex: new RegExp(`^${escapedDepartment}$`, 'i') } };
     }
 
-    // Search in title and description
+    // Search in title, description, and courseId (case-insensitive)
+    let searchFilter = null;
     if (search) {
-      query.$or = [
-        { title: { $regex: search, $options: "i" } },
-        { description: { $regex: search, $options: "i" } },
-        { courseId: { $regex: search, $options: "i" } },
-      ];
+      const decodedSearch = decodeURIComponent(search).trim();
+      const escapedSearch = escapeRegex(decodedSearch);
+      searchFilter = {
+        $or: [
+          { title: { $regex: escapedSearch, $options: "i" } },
+          { description: { $regex: escapedSearch, $options: "i" } },
+          { courseId: { $regex: escapedSearch, $options: "i" } },
+        ]
+      };
+    }
+
+    // Combine filters with AND logic when both are provided
+    if (departmentFilter && searchFilter) {
+      query.$and = [departmentFilter, searchFilter];
+    } else if (departmentFilter) {
+      Object.assign(query, departmentFilter);
+    } else if (searchFilter) {
+      Object.assign(query, searchFilter);
     }
 
     const courses = await Course.find(query).sort({ courseId: 1 });
