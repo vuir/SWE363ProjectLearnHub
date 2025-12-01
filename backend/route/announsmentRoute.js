@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const Announcement= require("../controller/announsmentController");
-const responseHandler = require("../middleware/responseHandler");
+const convertingResponse = require("../middleware/convertingResponse");
 
-router.post("/admin/make-announcement",responseHandler(Announcement.createAnnouncement));
+router.post("/admin/make-announcement",convertingResponse(Announcement.createAnnouncement));
 
-router.post("/view-announcement", responseHandler(Announcement.readAnnouncement));
+router.post("/view-announcement", convertingResponse(Announcement.readAnnouncement));
 
 module.exports = router;

@@ -15,6 +15,14 @@ app.use(express.json());
 const authRoutes = require("./route/authRoutes");  
 app.use("/api/auth", authRoutes); 
 
+// session routers
+const sessionRoutes = require("./route/sessionRoute");
+app.use("/api/session", sessionRoutes);
+
+// announcement routers
+const announcementRoutes = require("./route/announsmentRoute")
+app.use("/api/announcement", announcementRoutes);
+
 // test route
 app.get("/", (req, res) => {
 	res.json({ message: "backend is running well!" });

@@ -1,6 +1,6 @@
 const mongoose= require("mongoose");
-const Session = require("../models/Session");
-const Tutor = require("../models/TutorProfile");
+const Session = require("../model/Sessions");
+const Tutor = require("../model/TutorProfile");
 
 
 /**
@@ -39,7 +39,7 @@ async function readSession() {
     try{
          const allSession = await Session.find();
          if (!allSession.length) 
-            {return [204, { "message": "No Sessions are found." }, null];}
+            {return [200, { "message": "No Sessions are found." }, null];}
          return [200, allSession, null];
       }
       catch (err) {
@@ -60,10 +60,10 @@ async function updateSession(req, res){
         return [400, { "message": "Course id is not valid." }, null];}
     if (!mongoose.Types.ObjectId.isValid(req.body.tutorId)) {
         return [400, { "message": "tutor id is not valid." }, null];}
-            const session = await Session.find(req.body._id);
+            const session = await Session.findById(req.body._id);
             if(session.tutorId!=req.body.tutorId){
                 const touterOld = await Tutor.findById(session.tutorId);
-                touter.coursesTaught = touter.coursesTaught.filter(id => id.toString() !== req.body.courseId);
+                touterOld.coursesTaught = touterOld.coursesTaught.filter(id => id.toString() !== req.body.courseId);
                 await touterOld.save();
                 const touterNew = await Tutor.findById(req.body.tutorId);
                 touterNew.coursesTaught.push(req.body.courseId);
@@ -78,7 +78,7 @@ async function updateSession(req, res){
             session.status=req.body.status;
         await session.save();
         console.log("Session updated");
-        return [201, { result, session }, null];
+        return [201,session, null];
     } catch (err) {
         console.log(err);
         return [500, null, null];
@@ -91,14 +91,16 @@ async function updateSession(req, res){
  */
 async function deleteSession(req, res){
     try {
-    if (!mongoose.Types.ObjectId.isValid(req.params._id)) {
+    if (!mongoose.Types.ObjectId.isValid(req.body._id) ){
         return [400, { "message": " session is not valid." }, null];}
-        const session = await Session.findById(req.params._id);
+        const session = await Session.findById(req.body._id);
         if (!session){
-             return [204, { "message": "No matched session found." }, null];}
-        const deleted_session= await session.deleteOne(req.params._id);
-        const tutor = await Tutor.findById(deleted_session.tutorId);
-        tutor.coursesTaught = tutor.coursesTaught.filter(id => id.toString() !== deleted_session.courseId);
+             return [200, { "message": "No matched session found." }, null];}
+        const tutorId = session.tutorId;
+        const courseId = session.courseId;
+        const deleted_session= await session.deleteOne(req.body._id);
+        const tutor = await Tutor.findById(tutorId);
+        tutor.coursesTaught = tutor.coursesTaught.filter(id => id.toString() !== courseId);
         const related_tutor = await tutor.save();
         console.log("Session Deleted");
         return [200, { deleted_session, related_tutor }, null];

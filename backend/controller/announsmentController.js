@@ -1,7 +1,7 @@
 const mongoose= require("mongoose");
-const User = require("../models/User");
-const Announcement = require("../models/Announcement");
-const Notification = require("../models/Notification");
+const User = require("../model/User");
+const Announcement = require("../model/Announcement");
+const Notification = require("../model/Notification");
 
 
 
