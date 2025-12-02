@@ -1,16 +1,13 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const applicationController = require('../controller/applicationController');
-const authMiddleware = require('../middleware/authMiddleware');
-const adminMiddleware = require('../middleware/adminMiddleware'); 
+const { getAllApplications, updateApplicationStatus } = require("../controller/applicationController");
+const auth = require("../middleware/auth");
+const { allowRoles } = require("../middleware/roles");
 
-// show all pending applications 
-router.get('/pending', authMiddleware, adminMiddleware, applicationController.getPendingApplications);
+// Get all aplications 
+router.get("/", auth, allowRoles("admin"), getAllApplications);
 
-// approve an application
-router.patch('/approve/:id', authMiddleware, adminMiddleware, applicationController.approveApplication);
-
-// reject an application
-router.patch('/reject/:id', authMiddleware, adminMiddleware, applicationController.rejectApplication);
+// Updated 
+router.put("/status/:id", auth, allowRoles("admin"), updateApplicationStatus);
 
 module.exports = router;

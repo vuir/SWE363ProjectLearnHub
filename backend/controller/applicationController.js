@@ -1,97 +1,48 @@
-const Application = require('../model/Applications');
+const Application = require("../model/Application");
 
-// Create a new application 
-exports.applyForCourse = async (req, res) => { 
+// viwe application for Admin 
+exports.getAllApplications = async (req, res) => {
   try {
-    const { courseId, grade } = req.body;
-    const userId = req.user.id; 
-
-    if (!courseId || !grade) { 
-      return res.status(400).json({ message: 'courseId and grade are required' }); 
-    } 
-
-    const existing = await Application.findOne({ userId, courseId }); 
-    if (existing) {
-      return res.status(409).json({ message: 'You already applied for this course' });
-    }
-
-    const application = new Application({ userId, courseId, grade });
-    await application.save();
-
-    return res.status(201).json({ message: 'Application submitted', application });
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ message: 'Server error' });
-  }
-};
-
-// get applications by current user
-exports.getUserApplications = async (req, res) => {
-  try {
-    const userId = req.user.id;
-
-    const applications = await Application.find({ userId })
-      .populate('courseId', 'name description')
+    const applications = await Application.find()
+      .populate("userId", "name")  
+      .populate("courseId", "name")      
       .sort({ createdAt: -1 });
+      
+    const result = applications.map(app => ({
+      id: app._id,
+      studentName: app.userId.name,
+      courseName: app.courseId.name,
+      grade: app.grade,
+      status: app.status,
+      appliedAt: app.createdAt,
+    }));
 
-    return res.json({ applications });
+    return res.json({ applications : result });
+
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ message: 'Server error' });
+    return res.status(500).json({ message: "Server error" });
   }
 };
 
-// all pending applications in admin view
-exports.getPendingApplications = async (req, res) => {
-  try {
-    const applications = await Application.find({ status: 'pending' })
-      .populate('userId', 'name email')
-      .populate('courseId', 'name description')
-      .sort({ createdAt: -1 });
-
-    return res.json({ applications });
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ message: 'Server error' });
-  }
-};
-
-// Approve an application by admin only
-exports.approveApplication = async (req, res) => {
+// Aprroved or Rejected
+exports.updateApplicationStatus = async (req, res) => {
   try {
     const { id } = req.params;
+    const { status } = req.body; 
 
     const application = await Application.findById(id);
     if (!application) {
-      return res.status(404).json({ message: 'Application not found' });
+      return res.status(404).json({ message: "Application not found" });
     }
 
-    application.status = 'approved';
+    application.status = status;
     await application.save();
 
-    return res.json({ message: 'Application approved', application });
+    return res.json({ message: "Application updated", application });
+
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ message: 'Server error' });
-  }
-};
-
-// Reject an application by admin only
-exports.rejectApplication = async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    const application = await Application.findById(id);
-    if (!application) {
-      return res.status(404).json({ message: 'Application not found' });
-    }
-
-    application.status = 'rejected';
-    await application.save();
-
-    return res.json({ message: 'Application rejected', application });
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ message: 'Server error' });
+    return res.status(500).json({ message: "Server error" });
   }
 };
