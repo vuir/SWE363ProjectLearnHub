@@ -24,6 +24,9 @@ app.use("/api/notifications", require("./route/notificationRoute"));
 // course routes
 app.use("/api/courses", require("./route/courseRoutes"));
 
+// favorite routes
+app.use("/api/favorites", require("./route/favoriteRoutes"));
+
 // test route
 app.get("/", (req, res) => {
 	res.json({ message: "backend is running well!" });
