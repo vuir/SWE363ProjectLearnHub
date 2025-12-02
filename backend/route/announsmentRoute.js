@@ -5,6 +5,6 @@ const convertingResponse = require("../middleware/convertingResponse");
 
 router.post("/admin/make-announcement",convertingResponse(Announcement.createAnnouncement));
 
-router.post("/view-announcement", convertingResponse(Announcement.readAnnouncement));
+router.get("/view-announcement", convertingResponse(Announcement.readAnnouncement));
 
 module.exports = router;

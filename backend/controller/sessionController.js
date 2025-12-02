@@ -25,9 +25,9 @@ async function createSession(req, res){
             teamsLink: req.body.teamsLink,
             status: req.body.status,
         });
-        // const touter = await Tutor.findById(req.body.tutorId);
-        // touter.coursesTaught.push(req.body.courseId);
-        // await touter.save();
+        const touter = await Tutor.findById(req.body.tutorId);
+        touter.coursesTaught.push(req.body.courseId);
+        await touter.save();
         console.log("Session Created ");
         return [201,new_session, null];
     } catch (err) {
@@ -54,6 +54,9 @@ async function readSession() {
  */
 async function updateSession(req, res){
     try {
+     if (!req?.body?._id){
+      return [400, { message: "Session _id is required" }, null];
+     }
     if (!req?.body?.courseId || !req?.body?.tutorId || !req?.body?.title || !req?.body?.dateTime || !req.body.teamsLink) {
         return [400, { "message": "tutorId,courseId,title,dateTime and teamsLink are required" }, null];}
     if (!mongoose.Types.ObjectId.isValid(req.body.courseId)) {
@@ -61,7 +64,7 @@ async function updateSession(req, res){
     if (!mongoose.Types.ObjectId.isValid(req.body.tutorId)) {
         return [400, { "message": "tutor id is not valid." }, null];}
             const session = await Session.findById(req.body._id);
-            if(session.tutorId!=req.body.tutorId){
+            if(session.tutorId.toString()!=req.body.tutorId){
                 const touterOld = await Tutor.findById(session.tutorId);
                 touterOld.coursesTaught = touterOld.coursesTaught.filter(id => id.toString() !== req.body.courseId);
                 await touterOld.save();
@@ -98,7 +101,7 @@ async function deleteSession(req, res){
              return [200, { "message": "No matched session found." }, null];}
         const tutorId = session.tutorId;
         const courseId = session.courseId;
-        const deleted_session= await session.deleteOne(req.body._id);
+        const deleted_session= await session.deleteOne();
         const tutor = await Tutor.findById(tutorId);
         tutor.coursesTaught = tutor.coursesTaught.filter(id => id.toString() !== courseId);
         const related_tutor = await tutor.save();
