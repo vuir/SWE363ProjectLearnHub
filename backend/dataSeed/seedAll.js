@@ -256,6 +256,7 @@ async function seedAll() {
 						sessions.push({
 							courseId: courseId,
 							tutorId: tutor._id,
+							tutorName: tutor.name,
 							title: `${insertedCourses.find(c => c._id.toString() === courseId.toString())?.title} - Session ${i + 1}`,
 							description: `Join this tutoring session to get help with ${insertedCourses.find(c => c._id.toString() === courseId.toString())?.title}. We'll cover key concepts and answer your questions.`,
 							dateTime: sessionDate,

@@ -40,6 +40,7 @@ async function seed() {
 						sessions.push({
 							courseId: course._id,
 							tutorId: tutor._id,
+							tutorName: tutor.name,
 							title: `${course.title} - Session ${i + 1}`,
 							description: `Join this tutoring session to get help with ${course.title}. We'll cover key concepts and answer your questions.`,
 							dateTime: sessionDate,
