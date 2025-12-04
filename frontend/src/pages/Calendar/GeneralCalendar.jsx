@@ -16,7 +16,8 @@ import "./GeneralCalendar.css";
 
 const sampleSessions = [
   {
-    id: 1,
+    _id: "6931b22eb2e9d2826fa344de",
+    id:1,
     tutorName: "Ahmad alghamdi",
     date: "19",
     month: 8, 
@@ -215,16 +216,30 @@ export default function GeneralCalendar() {
     setDeletingSession(session);
   };
 
-  const handleConfirmDeleteSession = () => {
-    if (deletingSession) {
+  const handleConfirmDeleteSession = async  () => {
+    console.log("gg")
+    if(!deletingSession) return;
+    try {
+    const res = await fetch("http://localhost:5000/api/session/admin-delete-session", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ _id: deletingSession._id }),
+    });
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(text || "Failed to delete session.");
+    }
+    //the old UI delete way i will delete it after i load the data (do not forget)
       const updatedSessions = allSessions.filter(s => s.id !== deletingSession.id);
       setAllSessions(updatedSessions);
       saveSessions(updatedSessions);
       setDeletingSession(null);
       alert("Session deleted successfully");
-    }
+      }
+      catch(err){
+      console.error("Error deleting sessions:", err);
+      }
   };
-
   const handleCancelDeleteSession = () => {
     setDeletingSession(null);
   };

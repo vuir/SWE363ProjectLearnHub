@@ -49,7 +49,6 @@ export default function TutorsList() {
   });
 };
 
-
   const toggleSideBar = () => setSideBar(prev => !prev);
 
   const getFilteredTutors = (query, tutors) => {
