@@ -217,7 +217,6 @@ export default function GeneralCalendar() {
   };
 
   const handleConfirmDeleteSession = async  () => {
-    console.log("gg")
     if(!deletingSession) return;
     try {
     const res = await fetch("http://localhost:5000/api/session/admin-delete-session", {

@@ -105,10 +105,12 @@ async function deleteSession(req, res){
         const courseId = session.courseId;
         const deleted_session= await session.deleteOne();
         const tutor = await Tutor.findById(tutorId);
+        if(tutor){
         tutor.coursesTaught = tutor.coursesTaught.filter(id => id.toString() !== courseId);
         const related_tutor = await tutor.save();
+        }
         console.log("Session Deleted");
-        return [200, { deleted_session, related_tutor }, null];
+        return [200,{ deleted_session}, null];
     } catch (err) {
         console.log(err);
         return [500, null, null];

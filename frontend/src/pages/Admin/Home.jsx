@@ -166,11 +166,26 @@ export default function AdminHome() {
     setEditForm({ id: "", title: "", icon: null, time: "", totre: "" });
     alert("Session updated successfully");
   };
-  const handleConfirmDeleteSession = () => {
-    setSession(sessions.filter(s => s.id !== deletingSession.id));
-    setDeletingSession(null);
-    alert("Session deleted successfully");
+  const handleConfirmDeleteSession = async () => {
+    if(!deletingSession) return;
+    try {
+    const res = await fetch("http://localhost:5000/api/session/admin-delete-session", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ _id: deletingSession._id }),
+    });
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(text || "Failed to delete session.");
+    }
+      setDeletingSession(null);
+      alert("Session deleted successfully");
+      }
+      catch(err){
+      console.error("Error deleting sessions:", err);
+      }
   };
+  
   const handleCancelSessionEdit = () => {
     setEditingSession(null);
     setEditForm({ id: "", title: "", icon: null, time: "", totre: "" });
@@ -268,6 +283,7 @@ export default function AdminHome() {
           <div key={seaion.id} style={{ position: 'relative' }}>
             <div onClick={(e) => isEditSessions && e.stopPropagation()}>
               <TutorSessions
+                key={seaion._id}
                 seesion={seaion}
                 index={idx}
                 isEditMode={isEditSessions}
@@ -417,7 +433,7 @@ export default function AdminHome() {
             <div className="admin-delete-modal-content">
               <h2 className="admin-delete-modal-title">Delete Session</h2>
               <p className="admin-delete-modal-message">
-                Are you sure you want to delete "{deletingSession.id}" session?
+                Are you sure you want to delete "{deletingSession.title}" session?
               </p>
               
               <div className="admin-delete-modal-buttons">
