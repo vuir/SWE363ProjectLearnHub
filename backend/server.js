@@ -32,6 +32,9 @@ app.use("/api/session", sessionRoutes);
 const announcementRoutes = require("./route/announsmentRoute")
 app.use("/api/announcement", announcementRoutes);
 
+// favorites routes
+app.use("/api/favorites", require("./route/favoriteRoutes"));
+
 // test route
 app.get("/", (req, res) => {
 	res.json({ message: "backend is running well!" });

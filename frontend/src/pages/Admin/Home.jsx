@@ -1,5 +1,4 @@
 import { useState,useEffect } from "react";
-import { sampleCourses } from "../../data/data";
 import { sampleSessions} from "../../data/data2";
 import CourseCard from "../../components/CourseCard";
 import TutorSessions from "../Sessions/TutorSessions";
@@ -12,11 +11,16 @@ import { useNavigate } from "react-router-dom";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import "./Home.css";
+import CalculateIcon from "@mui/icons-material/Calculate";
+import TerminalIcon from "@mui/icons-material/Terminal";
+import ScienceIcon from "@mui/icons-material/Science";
+import EngineeringIcon from "@mui/icons-material/PrecisionManufacturing";
+import SchoolIcon from "@mui/icons-material/School";
 
-
+const API_BASE_URL = "http://localhost:5000/api";
 
 export default function AdminHome() {
-  const [courses, setCourses] = useState(sampleCourses);
+  const [courses, setCourses] = useState([]);
   const [sessions, setSession] = useState([]);
   const [qurey,setQurey]=useState(" ")
   const [sideBar,setsideBar]=useState(false)
@@ -33,6 +37,20 @@ export default function AdminHome() {
     time: "",
     totre: ""
   });
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const res = await fetch(`${API_BASE_URL}/courses`);
+        const data = await res.json();
+        setCourses(data || []);
+      } catch (err) {
+        console.error("Error fetching courses:", err);
+      }
+    };
+
+    fetchCourses();
+  }, []);
 
   useEffect(() => {
     const readSessions = async () => {
@@ -72,13 +90,12 @@ export default function AdminHome() {
     setIsEditSessions(!isEditSessions);
   };
 
-  // Course handlers
   const handleEditCourse = (course, e) => {
     e.stopPropagation();
     setEditingCourse(course);
     setEditForm({
-      id: course.id,
-      title: course.title,
+      id: course.courseId || "",
+      title: course.department || course.title || "",
       icon: course.icon,
       time: "",
       totre: ""
@@ -95,16 +112,18 @@ export default function AdminHome() {
       alert("Please fill in all required fields.");
       return;
     }
-    const subjectPrefix = editingCourse.id;
+    const subjectPrefix = editingCourse.courseId || "";
     setCourses(courses.map(c => {
-      const courseSubject = c.id.split(" ")[0];
+      const courseId = c.courseId || "";
+      const courseSubject = courseId.split(" ")[0];
       if (courseSubject === subjectPrefix) {
         // Update all courses with this subject prefix
-        const courseNumber = c.id.split(" ")[1] || "";
+        const courseNumber = courseId.split(" ")[1] || "";
         return { 
           ...c, 
-          id: editForm.id + (courseNumber ? ` ${courseNumber}` : ""), 
-          title: editForm.title 
+          courseId: editForm.id + (courseNumber ? ` ${courseNumber}` : ""), 
+          department: editForm.title,
+          title: c.title
         };
       }
       return c;
@@ -116,9 +135,10 @@ export default function AdminHome() {
 
   const handleConfirmDeleteCourse = () => {
     // Delete all courses that start with the subject prefix
-    const subjectPrefix = deletingCourse.id;
+    const subjectPrefix = deletingCourse.courseId || "";
     setCourses(courses.filter(c => {
-      const courseSubject = c.id.split(" ")[0];
+      const courseId = c.courseId || "";
+      const courseSubject = courseId.split(" ")[0];
       return courseSubject !== subjectPrefix;
     }));
     setDeletingCourse(null);
@@ -230,23 +250,53 @@ export default function AdminHome() {
     setsideBar((prevState)=>!prevState)
   }
   const get_Filterd_courses=(qurey,courses)=>{
-    if(!qurey){
+    if(!qurey || qurey.trim() === " "){
       return courses;
     }
-    return courses.filter(cors=>cors.id.includes(qurey)||cors.title.includes(qurey))
-
+    return courses.filter(cors=>
+      (cors.courseId && cors.courseId.includes(qurey)) ||
+      (cors.title && cors.title.includes(qurey)) ||
+      (cors.department && cors.department.includes(qurey))
+    )
   }
+
+  // Get unique icon for each course prefix
+  const getIconForSubject = (subject) => {
+    const upperSubject = subject.toUpperCase();
+    if (upperSubject.startsWith("ICS") || upperSubject.startsWith("COE") || upperSubject.startsWith("SWE") || upperSubject.startsWith("CS")) {
+      return <TerminalIcon />;
+    } else if (upperSubject.startsWith("MATH") || upperSubject.startsWith("STAT")) {
+      return <CalculateIcon />;
+    } else if (upperSubject.startsWith("PHYS") || upperSubject.startsWith("CHEM") || upperSubject.startsWith("BIO")) {
+      return <ScienceIcon />;
+    } else if (upperSubject.startsWith("EE") || upperSubject.startsWith("ME") || upperSubject.startsWith("CE")) {
+      return <EngineeringIcon />;
+    } else {
+      return <SchoolIcon />;
+    }
+  };
 
   const getUniqueSubjects = (coursesList) => {
     const subjectMap = new Map();
     coursesList.forEach(course => {
-      const subject = course.id.split(" ")[0]; 
-      if (!subjectMap.has(subject)) {
-        subjectMap.set(subject, {
-          id: subject, 
-          title: course.title, 
-          icon: course.icon 
-        });
+      const courseId = course.courseId || "";
+      // Extract subject prefix 
+      const match = courseId.match(/^([A-Za-z]+)/);
+      const subject = match ? match[1].toUpperCase() : "";
+      
+      // Only process if we have a valid subject prefix
+      if (subject && subject.length >= 2) {
+        if (!subjectMap.has(subject)) {
+          // Use department field from the course
+          const department = course.department || course.title || "";
+          
+          subjectMap.set(subject, {
+            courseId: subject,
+            title: department,
+            department: department,
+            icon: getIconForSubject(subject)
+          });
+        }
       }
     });
     return Array.from(subjectMap.values());
@@ -274,7 +324,7 @@ export default function AdminHome() {
       <br></br>
       <section className="grid">
         {uniqueSubjects.map((course, idx) => (
-          <div key={course.id} style={{ position: 'relative' }}>
+          <div key={course.courseId} style={{ position: 'relative' }}>
             <div onClick={(e) => isEditCourses && e.stopPropagation()}>
               <CourseCard
                 course={course}
@@ -381,7 +431,7 @@ export default function AdminHome() {
             <div className="admin-delete-modal-content">
               <h2 className="admin-delete-modal-title">Delete Course</h2>
               <p className="admin-delete-modal-message">
-                Are you sure you want to delete "{deletingCourse.id}"?
+                Are you sure you want to delete "{deletingCourse.courseId}"?
               </p>
               
               <div className="admin-delete-modal-buttons">
