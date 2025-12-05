@@ -24,7 +24,15 @@ app.use("/api/notifications", require("./route/notificationRoute"));
 // course routes
 app.use("/api/courses", require("./route/courseRoutes"));
 
-// favorite routes
+// session routers
+const sessionRoutes = require("./route/sessionRoute");
+app.use("/api/session", sessionRoutes);
+
+// announcement routers
+const announcementRoutes = require("./route/announsmentRoute")
+app.use("/api/announcement", announcementRoutes);
+
+// favorites routes
 app.use("/api/favorites", require("./route/favoriteRoutes"));
 
 // test route

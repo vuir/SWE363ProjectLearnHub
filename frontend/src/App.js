@@ -23,7 +23,6 @@ import StudentProfile from './pages/Student/Profile.jsx';
 import StudentHome from './pages/Student/Home.jsx';
 import StudentJoinSession from './pages/Student/JoinSession.jsx';
 import StudentRatingSession from './pages/Student/RatingSession.jsx';
-import StudentFavorites from './pages/Student/Favorites.jsx';
 import StudentSupport from './pages/Student/Support.jsx';
 
 // Common pages
@@ -33,6 +32,7 @@ import Courses from './pages/Courses/Courses.jsx';
 import SubjectCourses from './pages/Courses/SubjectCourses.jsx';
 import TutorsList from './pages/Tutors/TutorsList.jsx';
 import GeneralCalendar from './pages/Calendar/GeneralCalendar.jsx';
+import Favorites from './pages/Favorites/Favorites.jsx';
  
  
  
@@ -58,14 +58,15 @@ function App() {
        <Route path="/tutor/profile" element={<TutorProfile />} />
        <Route path="/tutor/analytics" element={<TutorAnalytics />} />
        <Route path="/tutor/favorite" element={<TutorFavorites />} />
+       <Route path="/tutor/favorites" element={<Favorites />} />
        <Route path="/apply-session" element={<TutorApplySession />} />
        
        {/* Student Routes */}
        <Route path="/student" element={<StudentHome />} />
        <Route path="/student/profile" element={<StudentProfile />} />
+       <Route path="/student/favorites" element={<Favorites />} />
        <Route path="/join-session" element={<StudentJoinSession />} />
        <Route path="/student/rating-session" element={<StudentRatingSession />} />
-       <Route path="/favorites" element={<StudentFavorites />} />
        <Route path="/support" element={<StudentSupport />} />
        
        {/* Common Routes */}
