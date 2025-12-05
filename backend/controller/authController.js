@@ -86,7 +86,47 @@ const getMyProfile = async (req, res) => {
   }
 };
 
+/**
+ * Get tutor profile by studentId, name, or tutorId (ObjectId)
+ * @param {Request} req - Request object with studentId, name, or tutorId in query params
+ * @param {Response} res 
+ * @returns tutor profile data
+ */
+const getTutorProfile = async (req, res) => {
+  try {
+    const { studentId, name, tutorId } = req.query;
+
+    if (!studentId && !name && !tutorId) {
+      return [400, { "message": "Student ID, name, or tutor ID is required." }, null];
+    }
+
+    let query = { role: "tutor" };
+    
+    if (tutorId) {
+      if (!mongoose.Types.ObjectId.isValid(tutorId)) {
+        return [400, { "message": "Tutor ID is not valid." }, null];
+      }
+      query._id = tutorId;
+    } else if (studentId) {
+      query.studentId = studentId;
+    } else if (name) {
+      query.name = { $regex: new RegExp(name, 'i') };
+    }
+
+    const tutor = await User.findOne(query).select("-passwordHash");
+    if (!tutor) {
+      return [204, { "message": "Tutor not found." }, null];
+    }
+
+    return [200, tutor, null];
+  } catch (err) {
+    console.log(err);
+    return [500, null, null];
+  }
+};
+
 module.exports = {
   handleLogin,
-  getMyProfile
+  getMyProfile,
+  getTutorProfile
 };

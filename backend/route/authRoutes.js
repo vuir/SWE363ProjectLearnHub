@@ -10,4 +10,7 @@ router.post("/login", convertingResponse(authController.handleLogin));
 // GET /api/auth/profile - Get current user profile
 router.get("/profile", auth, convertingResponse(authController.getMyProfile));
 
+// GET /api/auth/tutor - Get tutor profile
+router.get("/tutor", auth, convertingResponse(authController.getTutorProfile));
+
 module.exports = router;

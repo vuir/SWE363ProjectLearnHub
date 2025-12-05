@@ -102,12 +102,15 @@ useEffect(() => {
             minute: "2-digit",
             hour12: true,
           }),
-          courseCode: s.title, 
+          courseCode: s.courseId?.courseId || s.title,
           sessionDesc: s.description,
+          courseId: s.courseId,
+          title: s.title,
+          description: s.description,
         };
       });
       setAllSessions(mapped);
-      // the same old code used gropy the sessions but now i linked it to my real date (backend)
+
       if (mapped.length > 0) {
         const earliest = getEarliestSessionDate(mapped);
         setCurrentDate(earliest.date);
@@ -148,13 +151,19 @@ useEffect(() => {
 
   const handleSessionClick = (session) => {
     const sessionData = {
+      _id: session._id,
+      courseCode: session.courseCode,
+      courseId: session.courseId,
       id: session.courseCode,
+      tutorName: session.tutorName,
       totre: `By ${session.tutorName}`,
-      description: session.sessionDesc,
+      description: session.sessionDesc || session.description,
+      sessionDesc: session.sessionDesc || session.description,
       time: session.time,
       date: session.date,
       month: session.month,
-      year: session.year
+      year: session.year,
+      title: session.title
     };
     navigate("/apply-session", { state: { session: sessionData } });
   };

@@ -23,6 +23,8 @@ export default function SubjectCourses() {
   const [favoriteCourses, setFavoriteCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const itemsPerPage = 6;
+  const userType = localStorage.getItem('userType');
+  const isAdmin = userType === 'admin';
 
   const clike_sideBr = () => {
     setSideBar((prevState) => !prevState);
@@ -45,8 +47,10 @@ export default function SubjectCourses() {
     fetchCourses();
   }, []);
 
-  // Fetch user's favorites
+  // Fetch user's favorites (only for non-admin users)
   useEffect(() => {
+    if (isAdmin) return;
+
     const fetchFavorites = async () => {
       try {
         const token = localStorage.getItem("token");
@@ -67,7 +71,7 @@ export default function SubjectCourses() {
     };
 
     fetchFavorites();
-  }, []);
+  }, [isAdmin]);
 
   // Check if course is favorited
   const isCourseFavorited = (courseId) => {
@@ -187,14 +191,16 @@ export default function SubjectCourses() {
             return (
               <article key={course._id || courseId} className="subject-course-card">
                 <div className="subject-course-code">{courseId}</div>
-                <button
-                  className={`subject-heart-btn ${isFav ? "heart--active" : ""}`}
-                  onClick={() => toggleCourseFavorite(courseId)}
-                  aria-label={isFav ? "Unfavorite" : "Favorite"}
-                  title={isFav ? "Unfavorite" : "Favorite"}
-                >
-                  {isFav ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-                </button>
+                {!isAdmin && (
+                  <button
+                    className={`subject-heart-btn ${isFav ? "heart--active" : ""}`}
+                    onClick={() => toggleCourseFavorite(courseId)}
+                    aria-label={isFav ? "Unfavorite" : "Favorite"}
+                    title={isFav ? "Unfavorite" : "Favorite"}
+                  >
+                    {isFav ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                  </button>
+                )}
               </article>
             );
           })

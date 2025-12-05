@@ -82,6 +82,8 @@ export default function TutorsList() {
       description: tutor.description,
       sessionDesc: tutor.description,
       time: tutor.dateTime,
+      courseId: tutor.courseId,
+      courseCode: tutor.courseId?.courseId || tutor.title,
     };
     navigate("/apply-session", { state: { session: sessionData } });
   };

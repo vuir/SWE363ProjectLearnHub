@@ -19,20 +19,24 @@ export default function StudentJoinSession() {
 
   // Get session data from navigation state, or use defaults
   const session = location.state?.session || null;
-  // Handle both formats: from calendar (courseCode) or from sessions list (id)
-  const courseCode = session?.courseCode || session?.id || "Course";
-  // Handle both formats: from calendar (tutorName) or from sessions list (totre)
+  // Extract course code
+  const courseCode = session?.courseId?.courseId || session?.courseCode || session?.id || "Course";
+  // Handle both formats
   const tutorName = session?.tutorName || session?.totre?.replace("By ", "") || "Tutor";
   const description = session?.sessionDesc || session?.description || "Description about the meeting";
+  // Get session ID
+  const sessionId = session?._id || session?.id || null;
 
   const handleJoin = () => {
-    // Pass session data to Rating Session page
     navigate("/student/rating-session", { 
       state: { 
         session: {
+          sessionId: sessionId,
           courseCode: courseCode,
+          courseId: session?.courseId,
           tutorName: tutorName,
-          description: description
+          description: description,
+          _id: sessionId
         }
       } 
     });

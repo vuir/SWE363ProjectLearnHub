@@ -38,7 +38,7 @@ async function createSession(req, res){
 };
 async function readSession() {
     try{
-         const allSession = await Session.find();
+         const allSession = await Session.find().populate('courseId', 'courseId title department');
          if (!allSession.length) 
             {return [200, { "message": "No Sessions are found." }, null];}
          return [200, allSession, null];

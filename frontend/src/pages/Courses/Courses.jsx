@@ -24,6 +24,8 @@ export default function Courses() {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [favoriteCourses, setFavoriteCourses] = useState([]);
+  const userType = localStorage.getItem('userType');
+  const isAdmin = userType === 'admin';
 
   // Fetch courses from backend
   useEffect(() => {
@@ -42,8 +44,10 @@ export default function Courses() {
     fetchCourses();
   }, []);
 
-  // Fetch user's favorites
+  // Fetch user's favorites (only for non-admin users)
   useEffect(() => {
+    if (isAdmin) return;
+
     const fetchFavorites = async () => {
       try {
         const token = localStorage.getItem("token");
@@ -64,7 +68,7 @@ export default function Courses() {
     };
 
     fetchFavorites();
-  }, []);
+  }, [isAdmin]);
 
   // Check if course is favorited
   const isCourseFavorited = (courseId) => {
@@ -217,14 +221,16 @@ export default function Courses() {
                   {course.department}
                 </div>
               )}
-              <button
-                className={`heartBtn ${isFav ? "heart--active" : ""}`}
-                onClick={() => toggleCourseFavorite(courseId)}
-                aria-label={isFav ? "Unfavorite" : "Favorite"}
-                title={isFav ? "Unfavorite" : "Favorite"}
-              >
-                {isFav ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-              </button>
+              {!isAdmin && (
+                <button
+                  className={`heartBtn ${isFav ? "heart--active" : ""}`}
+                  onClick={() => toggleCourseFavorite(courseId)}
+                  aria-label={isFav ? "Unfavorite" : "Favorite"}
+                  title={isFav ? "Unfavorite" : "Favorite"}
+                >
+                  {isFav ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                </button>
+              )}
             </article>
           );
         })}

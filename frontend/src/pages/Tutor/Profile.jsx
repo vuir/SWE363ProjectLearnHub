@@ -19,6 +19,10 @@ export default function TutorProfile() {
   const [sideBar, setsideBar] = useState(false);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [reviews, setReviews] = useState([]);
+  const [rating, setRating] = useState(0);
+  const [tutorProfile, setTutorProfile] = useState(null);
+  const [showAllReviews, setShowAllReviews] = useState(false);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -36,6 +40,32 @@ export default function TutorProfile() {
 
         const data = await res.json();
         setUser(data);
+
+        // Fetch tutor profile to get rating
+        if (data && data._id) {
+          try {
+            const tutorProfileRes = await fetch(`${API_BASE_URL}/reviews/tutor/${data._id}`, {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+            });
+
+            const tutorProfileData = await tutorProfileRes.json();
+            if (tutorProfileRes.ok && tutorProfileData.reviews) {
+              setReviews(tutorProfileData.reviews || []);
+              
+              // Calculate average rating from reviews
+              if (tutorProfileData.reviews.length > 0) {
+                const avgRating = tutorProfileData.reviews.reduce((sum, rev) => sum + rev.rating, 0) / tutorProfileData.reviews.length;
+                setRating(Math.round(avgRating * 10) / 10);
+              }
+            }
+          } catch (err) {
+            console.error("Error fetching tutor reviews:", err);
+          }
+        }
       } catch (err) {
         console.error("Error fetching profile:", err);
       } finally {
@@ -119,15 +149,48 @@ export default function TutorProfile() {
       <section className="info">
         <div className="content">
           <h4>Your feedback:</h4>
-          <span className="rating"><p>4.5/5</p><StarIcon /></span>
-          <div className="info_box">
-            <span className="by"><PersonIcon /><p>Sarah</p></span>
-            <h6>The session was very helpful</h6>
-          </div>
-          <div className="info_box">
-            <span className="by"><PersonIcon /><p>Noor</p></span>
-            <h6>The session was good, but the voice is not clear</h6>
-          </div>
+          {reviews.length > 0 ? (
+            <>
+              <span className="rating"><p>{rating || 0}/5</p><StarIcon /></span>
+              {(showAllReviews ? reviews : reviews.slice(0, 3)).map((review, index) => (
+                <div key={review._id || index} className="info_box">
+                  <span className="by">
+                    <PersonIcon />
+                    <p>{review.studentId?.name || "Anonymous"}</p>
+                  </span>
+                  <h6>{review.comment || "No comment"}</h6>
+                </div>
+              ))}
+              {reviews.length > 3 && (
+                <button
+                  onClick={() => setShowAllReviews(!showAllReviews)}
+                  style={{
+                    marginTop: "12px",
+                    padding: "8px 16px",
+                    backgroundColor: "#56B46F",
+                    color: "white",
+                    border: "none",
+                    borderRadius: "8px",
+                    cursor: "pointer",
+                    fontSize: "14px",
+                    fontWeight: "500",
+                    transition: "background-color 0.2s ease"
+                  }}
+                  onMouseEnter={(e) => e.target.style.backgroundColor = "#0B6623"}
+                  onMouseLeave={(e) => e.target.style.backgroundColor = "#56B46F"}
+                >
+                  {showAllReviews ? "Show Less" : `Show More (${reviews.length - 3} more)`}
+                </button>
+              )}
+            </>
+          ) : (
+            <>
+              <span className="rating"><p>0/5</p><StarIcon /></span>
+              <div className="info_box">
+                <p>No feedback yet</p>
+              </div>
+            </>
+          )}
         </div>
       </section>
       <section className="unified-home-bottom-nav">

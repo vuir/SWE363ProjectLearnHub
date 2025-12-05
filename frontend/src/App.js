@@ -17,6 +17,7 @@ import TutorAnalytics from './pages/Tutor/Analytics.jsx';
 import TutorHome from './pages/Tutor/Home.jsx';
 import TutorApplySession from './pages/Tutor/ApplySession.jsx';
 import TutorFavorites from './pages/Tutor/Favorites.jsx';
+import TutorProfileView from './pages/Tutor/TutorProfileView.jsx';
 
 // Student imports
 import StudentProfile from './pages/Student/Profile.jsx';
@@ -46,6 +47,7 @@ function App() {
        {/* Admin Routes */}
        <Route path="/admin" element={<AdminHome />} />
        <Route path="/admin/profile" element={<AdminProfile />} />
+       <Route path="/admin/tutorProfile" element={<TutorProfileView />} />
        <Route path="/admin/analytics" element={<AdminAnalytics />} />
        <Route path="/admin-apply-session" element={<AdminApplySession />} />
        <Route path="/admin/make-announcement" element={<MakeAnnouncement />} />
@@ -56,6 +58,7 @@ function App() {
        {/* Tutor Routes */}
        <Route path="/tutor" element={<TutorHome />} />
        <Route path="/tutor/profile" element={<TutorProfile />} />
+       <Route path="/tutor/tutorProfile" element={<TutorProfileView />} />
        <Route path="/tutor/analytics" element={<TutorAnalytics />} />
        <Route path="/tutor/favorite" element={<TutorFavorites />} />
        <Route path="/tutor/favorites" element={<Favorites />} />
@@ -64,6 +67,7 @@ function App() {
        {/* Student Routes */}
        <Route path="/student" element={<StudentHome />} />
        <Route path="/student/profile" element={<StudentProfile />} />
+       <Route path="/student/tutorProfile" element={<TutorProfileView />} />
        <Route path="/student/favorites" element={<Favorites />} />
        <Route path="/join-session" element={<StudentJoinSession />} />
        <Route path="/student/rating-session" element={<StudentRatingSession />} />
