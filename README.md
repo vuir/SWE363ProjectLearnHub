@@ -37,28 +37,34 @@ Follow these steps to set up Learn Hub locally:
 # Usage instructions and examples
 Once the server is running, there are three types of users in Learn Hub: Admin, Tutor, and Student.
 Each user type has its own credentials and access level within the system.
-To login based on you rule:
-1. Admin
-  student_affairs@kfupm.edu.sa
-  password: admin123
-2. Tutor 
-  ahmed.tutor@kfupm.edu.sa
-  fatima.tutor@kfupm.edu.sa
-  mohammed.tutor@kfupm.edu.sa
-  sara.tutor@kfupm.edu.sa
-  password: tutor123
-3. Student 
-  hayat.student@kfupm.edu.sa
-  aleen.student@kfupm.edu.sa
-  ghada.student@kfupm.edu.sa
-  fatima.student@kfupm.edu.sa
-  password: student123
-      
-    Access:
-    - Search for tutors by course
-    - Join tutoring sessions
-    - Rate and review tutors
-    - Add tutors and courses to favorites for future sessions
+
+To login, use the following credentials based on your role:
+
+## 1. Admin
+- **Email:** student_affairs@kfupm.edu.sa
+- **Password:** admin123
+
+## 2. Tutor
+- **Emails:**
+  - ahmed.tutor@kfupm.edu.sa
+  - fatima.tutor@kfupm.edu.sa
+  - mohammed.tutor@kfupm.edu.sa
+  - sara.tutor@kfupm.edu.sa
+- **Password:** tutor123
+
+## 3. Student
+- **Emails:**
+  - hayat.student@kfupm.edu.sa
+  - aleen.student@kfupm.edu.sa
+  - ghada.student@kfupm.edu.sa
+  - fatima.student@kfupm.edu.sa
+- **Password:** student123
+
+### Student Access Features:
+- Search for tutors by course
+- Join tutoring sessions
+- Rate and review tutors
+- Add tutors and courses to favorites for future sessions
 
 ## Team member names and roles.
 - Aleen Alqarni  
