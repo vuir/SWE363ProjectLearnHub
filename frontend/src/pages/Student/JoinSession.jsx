@@ -19,31 +19,28 @@ export default function StudentJoinSession() {
 
   // Get session data from navigation state, or use defaults
   const session = location.state?.session || null;
-  // Handle both formats: from calendar (courseCode) or from sessions list (id)
-  const courseCode = session?.courseCode || session?.id || "Course";
-  // Handle both formats: from calendar (tutorName) or from sessions list (totre)
+  // Extract course code
+  const courseCode = session?.courseId?.courseId || session?.courseCode || session?.id || "Course";
+  // Handle both formats
   const tutorName = session?.tutorName || session?.totre?.replace("By ", "") || "Tutor";
   const description = session?.sessionDesc || session?.description || "Description about the meeting";
+  // Get session ID
+  const sessionId = session?._id || session?.id || null;
 
- const handleJoin = async () => {
-  try {
-    const token = localStorage.getItem("token");
 
-    if (!session?.sessionId) {
-      alert("Session ID is missing");
-      return;
-    }
-
-    const res = await fetch("http://localhost:5000/api/bookings/create", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
-      },
-      body: JSON.stringify({
-        sessionId: session.sessionId
-      })
-    });
+  const handleJoin = () => {
+    navigate("/student/rating-session", { 
+      state: { 
+        session: {
+          sessionId: sessionId,
+          courseCode: courseCode,
+          courseId: session?.courseId,
+          tutorName: tutorName,
+          description: description,
+          _id: sessionId
+        }
+      } 
+  });
 
     const data = await res.json();
 
