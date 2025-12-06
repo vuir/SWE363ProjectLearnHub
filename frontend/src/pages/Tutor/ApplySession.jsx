@@ -22,18 +22,19 @@ export default function TutorApplySession() {
     setSideBar((prevState) => !prevState);
   };
 
-  const handleRegister = () => {
-    navigate("/join-session", {
-      state: {
-        session: {
-          courseCode: courseCode,
-          tutorName: tutorName,
-          description: description,
-          sessionDesc: description
-        }
+ const handleRegister = () => {
+  navigate("/join-session", {
+    state: {
+      session: {
+        sessionId: session?._id,        
+        courseCode: courseCode,
+        tutorName: tutorName,
+        description: description,
+        sessionDesc: description
       }
-    });
-  };
+    }
+  });
+};
 
   return (
     <main className="apply-session-wrap">
