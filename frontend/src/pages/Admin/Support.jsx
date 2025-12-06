@@ -20,7 +20,7 @@ export default function Support() {
     async function loadTickets() {
       const token = localStorage.getItem("token");
 
-      const res = await fetch("http://localhost:4000/api/support", {
+      const res = await fetch("http://localhost:5000/api/support", {
         headers: { Authorization: `Bearer ${token}` }
       });
 
