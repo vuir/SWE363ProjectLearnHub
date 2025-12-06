@@ -25,18 +25,45 @@ export default function StudentJoinSession() {
   const tutorName = session?.tutorName || session?.totre?.replace("By ", "") || "Tutor";
   const description = session?.sessionDesc || session?.description || "Description about the meeting";
 
-  const handleJoin = () => {
-    // Pass session data to Rating Session page
-    navigate("/student/rating-session", { 
-      state: { 
-        session: {
-          courseCode: courseCode,
-          tutorName: tutorName,
-          description: description
-        }
-      } 
+  const handleJoin = async () => {
+  try {
+    const token = localStorage.getItem("token");
+
+    if (!session?.sessionId) {
+      alert("Session ID is missing");
+      return;
+    }
+
+    const res = await fetch("http://localhost:5000/api/booking/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        sessionId: session.sessionId
+      })
     });
-  };
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert(data.message || "Failed to book session");
+      return;
+    }
+
+    alert("Booking created successfully!");
+
+    navigate("/student/rating-session", {
+      state: { session }
+    });
+
+  } catch (err) {
+    console.error(err);
+    alert("Server error");
+  }
+};
+
 
   return (
     <main className="join-session-wrap">
