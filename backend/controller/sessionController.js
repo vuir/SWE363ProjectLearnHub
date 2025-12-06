@@ -10,7 +10,8 @@ const Tutor = require("../model/TutorProfile");
  */
 async function createSession(req, res){
     try {
-    if (!req?.body?.courseId || !req?.body?.tutorId || !req?.body?.title || !req?.body?.dateTime || !req.body.teamsLink) {
+        console.log("createSession body:", req.body);
+    if (!req?.body?.courseId || !req?.body?.tutorId || !req?.body?.title || !req?.body?.dateTime || !req.body.teamsLink ||!req.body.tutorName ) {
         return [400, { "message": "tutorId,courseId,title,dateTime and teamsLink are required" }, null];}
     if (!mongoose.Types.ObjectId.isValid(req.body.courseId)) {
         return [400, { "message": "Course id is not valid." }, null];}
@@ -27,8 +28,10 @@ async function createSession(req, res){
             status: req.body.status,
         });
         const touter = await Tutor.findById(req.body.tutorId);
+        if(touter){
         touter.coursesTaught.push(req.body.courseId);
         await touter.save();
+        }
         console.log("Session Created ");
         return [201,new_session, null];
     } catch (err) {
@@ -38,7 +41,7 @@ async function createSession(req, res){
 };
 async function readSession() {
     try{
-         const allSession = await Session.find().populate('courseId', 'courseId title department');
+         const allSession = await Session.find()
          if (!allSession.length) 
             {return [200, { "message": "No Sessions are found." }, null];}
          return [200, allSession, null];

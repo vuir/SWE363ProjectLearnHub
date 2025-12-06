@@ -13,6 +13,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import CloseIcon from "@mui/icons-material/Close";
 import { getHomeRoute } from "../../utils/getHomeRoute";
 import "./GeneralCalendar.css";
+import { dropDown} from "../../data/data3";
 
 
 const monthNames = [
@@ -67,11 +68,13 @@ export default function GeneralCalendar() {
   const [formData, setFormData] = useState({
     time: "",
     courseCode: "",
-    sessionDesc: ""
+    sessionDesc: "",
+    course:""
   });
   const navigate = useNavigate();
   const userType = localStorage.getItem('userType');
-  const currentTutorName = "Fatima Al-Rashid";
+  const currentTutorName = localStorage.getItem('userName');
+  const currentTutorID = localStorage.getItem('userId');
 
 useEffect(() => {
   const readSessions = async () => {
@@ -93,6 +96,8 @@ useEffect(() => {
         const dt = new Date(s.dateTime);
         return {
           _id: s._id,
+          tutorId:s.tutorId,
+          courseId:s.courseId,
           tutorName: s.tutorName,
           date: String(dt.getDate()),
           month: dt.getMonth(),
@@ -107,10 +112,12 @@ useEffect(() => {
           courseId: s.courseId,
           title: s.title,
           description: s.description,
+          teamsLink:s.teamsLink,
+          status:s.status
         };
       });
       setAllSessions(mapped);
-
+      // the same old code used to gropy the sessions but now i linked it to my real date (backend)
       if (mapped.length > 0) {
         const earliest = getEarliestSessionDate(mapped);
         setCurrentDate(earliest.date);
@@ -163,7 +170,8 @@ useEffect(() => {
       date: session.date,
       month: session.month,
       year: session.year,
-      title: session.title
+      title: session.title,
+      teamsLink: session.teamsLink
     };
     navigate("/apply-session", { state: { session: sessionData } });
   };
@@ -186,7 +194,7 @@ useEffect(() => {
   // Handle add session
   const handleAddSession = () => {
     setEditingSession(null);
-    setFormData({ time: "", courseCode: "", sessionDesc: "" });
+    setFormData({ time: "", courseCode: "", sessionDesc: "",course:""});
     setShowAddModal(true);
   };
 
@@ -197,7 +205,8 @@ useEffect(() => {
     setFormData({
       time: session.time,
       courseCode: session.courseCode,
-      sessionDesc: session.sessionDesc
+      sessionDesc: session.sessionDesc,
+      course:session.course
     });
     setShowAddModal(true);
   };
@@ -220,10 +229,6 @@ useEffect(() => {
       const text = await res.text();
       throw new Error(text || "Failed to delete session.");
     }
-    //the old UI delete way i will delete it after i load the data (do not forget)
-      const updatedSessions = allSessions.filter(s => s.id !== deletingSession.id);
-      setAllSessions(updatedSessions);
-      saveSessions(updatedSessions);
       setDeletingSession(null);
       alert("Session deleted successfully");
       }
@@ -234,44 +239,90 @@ useEffect(() => {
   const handleCancelDeleteSession = () => {
     setDeletingSession(null);
   };
-
+  //a function to reassaimble the time
+  const buildDateTime = (year, month, day, timeStr) => {
+  let hour, minute;
+  const time = timeStr.trim().toUpperCase();
+  //here we are converting AM and PM
+  if (time.endsWith("AM") || time.endsWith("PM")) {
+    const hm = time.replace("AM", "").replace("PM", "").trim();
+    [hour, minute] = hm.split(":").map(Number);
+    if (time.endsWith("PM") && hour < 12) hour += 12;
+    if (time.endsWith("AM") && hour === 12) hour = 0;
+  } 
+  const date = new Date();
+  date.setFullYear(year);
+  date.setMonth(month); 
+  date.setDate(Number(day));
+  date.setHours(hour);
+  date.setMinutes(minute);
+  date.setSeconds(0);
+  date.setMilliseconds(0);
+  return date.toISOString();
+};
   // Handle form submit
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.time || !formData.courseCode || !formData.sessionDesc) {
+    if (!formData.time || !formData.courseCode || !formData.sessionDesc ||!formData.course) {
       alert("Please fill in all fields");
       return;
     }
-
     if (editingSession) {
-      // Update existing session
-      const updatedSessions = allSessions.map(s => 
-        s.id === editingSession.id 
-          ? { ...s, ...formData }
-          : s
-      );
-      setAllSessions(updatedSessions);
-      saveSessions(updatedSessions);
+      // Update sessions for the loged in user
+      try{
+    const res = await fetch("http://localhost:5000/api/session/totur-edit-session", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      //here i reformated the data that was loded to the frontend
+      //when we loadded them we had to splite the DateTime object and here we are reassampling it
+      body: JSON.stringify({ _id: editingSession._id,
+        courseId:editingSession.courseId,
+        tutorId:editingSession.tutorId,
+        tutorName:editingSession.tutorName,
+        title:formData.courseCode,
+        description:formData.sessionDesc,
+        dateTime:buildDateTime(editingSession.year,editingSession.month,editingSession.date,formData.time),
+        teamsLink:editingSession.teamsLink,
+        status:editingSession.status
+      }),
+    });
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(text || "Failed to edit session.");
+    }
+    }
+      catch(err){
+      console.error("Error edditing sessions:", err);
+      }
     } else {
       // Add new session
-      const newSession = {
-        id: Date.now(),
-        tutorName: currentTutorName,
-        date: selectedDate.toString(),
-        month: currentDate.getMonth(),
-        year: currentDate.getFullYear(),
-        time: formData.time,
-        courseCode: formData.courseCode,
-        sessionDesc: formData.sessionDesc,
-        createdBy: currentTutorName
-      };
-      const updatedSessions = [...allSessions, newSession];
-      setAllSessions(updatedSessions);
-      saveSessions(updatedSessions);
+     try{
+    const res = await fetch("http://localhost:5000/api/session/totur-create-session", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ 
+        courseId:formData.course,
+        tutorId:currentTutorID,
+        tutorName:currentTutorName,
+        title:formData.courseCode,
+        description:formData.sessionDesc,
+        dateTime:buildDateTime(currentDate.getFullYear(),currentDate.getMonth(),selectedDate,formData.time),
+        teamsLink:"https://teams.microsoft.com/l/meetup-join/19:meeting_6932e8e386fe056b2e9d64a4_6932e8e386fe056b2e9d64ad_0@thread.tacv2",
+        status:"scheduled"//the defulte for the status
+      }),
+    });
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(text || "Failed to add session.");
+    }
+    }
+      catch(err){
+      console.error("Error adding sessions:", err);
+      }
     }
 
     setShowAddModal(false);
-    setFormData({ time: "", courseCode: "", sessionDesc: "" });
+    setFormData({ time: "", courseCode: "", sessionDesc: "", course:"" });
     setEditingSession(null);
   };
 
@@ -370,7 +421,7 @@ useEffect(() => {
         {sessionsForSelectedDate.length > 0 ? (
           sessionsForSelectedDate.map((session) => (
             <article 
-              key={session.id} 
+              key={session._id} 
               className="calendar-session-card"
               onClick={() => handleSessionClick(session)}
               style={{ cursor: 'pointer' }}
@@ -471,7 +522,7 @@ useEffect(() => {
                 </select>
               </div>
               <div className="calendar-modal-field">
-                <label>Course Code *</label>
+                <label>Session Title *</label>
                 <input 
                   type="text"
                   value={formData.courseCode}
@@ -480,6 +531,20 @@ useEffect(() => {
                   required
                 />
               </div>
+               <div className="calendar-modal-field">
+               <label>Course *</label>
+            <select
+              value={formData.course}
+              onChange={(e) => setFormData({...formData, course: e.target.value})}
+            >
+              <option value="">Select Course</option>
+              {dropDown.map((course) => (
+                <option key={course.id} value={course.id}>
+                  {course.title}
+                </option>
+              ))}
+            </select>
+            </div>
               <div className="calendar-modal-field">
                 <label>Session Title/Description *</label>
                 <textarea
