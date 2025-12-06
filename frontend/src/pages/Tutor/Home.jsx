@@ -81,6 +81,17 @@ export default function TutorHome() {
     )
   }
 
+  const get_Filterd_sessions=(qurey,sessions)=>{  
+    if(!qurey || qurey.trim() === " "){
+      return sessions;
+    }
+    //  filter by tutor name
+    const queryLower = qurey.toLowerCase().trim();
+    return sessions.filter(session=>
+      session.tutorName && session.tutorName.toLowerCase().includes(queryLower)
+    )
+  }
+
   const getIconForSubject = (subject) => {
     const upperSubject = subject.toUpperCase();
     if (upperSubject.startsWith("ICS") || upperSubject.startsWith("COE") || upperSubject.startsWith("SWE") || upperSubject.startsWith("CS")) {
@@ -123,6 +134,7 @@ export default function TutorHome() {
 
   const Filterd_courses=get_Filterd_courses(qurey,courses)
   const uniqueSubjects = getUniqueSubjects(Filterd_courses)
+  const Filterd_sessions=get_Filterd_sessions(qurey,sessions)
 
   return (
     <main className="wrap">
@@ -155,7 +167,7 @@ export default function TutorHome() {
       </div>
       <br></br>
       <section className="sessions">
-        {sessions.slice(0, 4).map((session, idx) => (
+        {Filterd_sessions.slice(0, 4).map((session, idx) => (
           <TutorSessions
             key={session._id}
             seesion={session}

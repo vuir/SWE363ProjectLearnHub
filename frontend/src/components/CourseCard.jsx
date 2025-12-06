@@ -8,17 +8,15 @@ export default function CourseCard({ course, index, onMutateCourse, isEditMode }
 
   const handleCourseClick = () => {
     if (isEditMode) return; 
-    const courseId = course.courseId || "";
-    // Extract subject prefix - get all letters before any numbers or spaces
-    const match = courseId.match(/^([A-Za-z]+)/);
-    const subject = match ? match[1].toUpperCase() : courseId.split(" ")[0];
+    const navCourseId = course.originalCourseId || course.courseId || "";
+    const match = navCourseId.match(/^([A-Za-z]+)/);
+    const subject = match ? match[1].toUpperCase() : navCourseId.split(" ")[0];
     navigate(`/courses/${subject}`);
   };
 
-  const courseId = course.courseId || "";
-  // Extract subject prefix - get all letters before any numbers or spaces
-  const match = courseId.match(/^([A-Za-z]+)/);
-  const subjectName = match ? match[1].toUpperCase() : courseId.split(" ")[0];
+  const displayCourseId = course.courseId || "";
+  const match = displayCourseId.match(/^([A-Za-z]+)/);
+  const subjectName = match ? match[1].toUpperCase() : displayCourseId.split(" ")[0];
   const displayTitle = course.department || course.title || "";
 
   return (

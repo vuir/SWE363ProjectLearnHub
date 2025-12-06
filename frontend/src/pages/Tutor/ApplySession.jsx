@@ -23,6 +23,7 @@ export default function TutorApplySession() {
     setSideBar((prevState) => !prevState);
   };
 
+ 
   // Get user role and navigate to appropriate tutor profile route
   const handleViewTutor = () => {
     const userType = localStorage.getItem('userType');
@@ -52,14 +53,16 @@ export default function TutorApplySession() {
         session: {
           _id: session?._id || session?.id,
           courseCode: courseCode,
-          courseId: session?.courseId, // Include courseId if available
+          courseId: session?.courseId,
           tutorName: tutorName,
           description: description,
-          sessionDesc: description
+          sessionDesc: description,
+          teamsLink: session?.teamsLink
         }
       }
-    });
+    })
   };
+
 
   return (
     <main className="apply-session-wrap">

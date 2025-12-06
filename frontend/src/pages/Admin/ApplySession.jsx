@@ -38,7 +38,6 @@ export default function AdminApplySession() {
   };
 
   const handleRegister = () => {
-    // Pass session data to Join Session page (for admin, this might be different)
     navigate("/join-session", {
       state: {
         session: {
@@ -47,11 +46,13 @@ export default function AdminApplySession() {
           courseId: session?.courseId, // Include courseId if available
           tutorName: sessionTutorName,
           description: sessionDescription,
-          sessionDesc: sessionDescription
+          sessionDesc: sessionDescription,
+          teamsLink: session?.teamsLink // Include Teams link
         }
       }
     });
   };
+
 
   const handleEdit = () => {
     // Set form values to current values
@@ -188,8 +189,8 @@ export default function AdminApplySession() {
       </section>
 
       {/* Home Icon at Bottom */}
-      <section className="admin-apply-bottom-nav">
-        <button className="admin-apply-home-btn">
+      <section className="unified-home-bottom-nav">
+        <button className="unified-home-btn">
           <Link to={getHomeRoute()}>
             <HomeIcon />
           </Link>

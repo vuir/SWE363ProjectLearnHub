@@ -1,6 +1,13 @@
 .analytics-shell{
-  max-width: 600px;
-  padding: 100px 18px 26px;
+  width: 100%;
+  padding-top: 76px; /* Space for toolbar */
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 100px; /* Space for home button */
+  min-height: 100vh;
+  max-width: 1400px;
+  margin: 0 auto;
+  box-sizing: border-box;
   position: relative;
 }
 
@@ -39,7 +46,7 @@
 .analytics-section{
   background: #d7f1db;
   border-radius: 22px;
-  padding: 14px 12px 16px;
+  padding: 4px 12px 6px;
 }
 
 .analytics-section-title{
@@ -76,24 +83,4 @@
 .analytics-subject-name{
   font-size: 10px;
   color: #21553a;
-}
-
-.analytics-bottom-nav{
-  display: flex;
-  justify-content: center;
-  margin-top: 70px;
-}
-
-.analytics-home-btn{
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  border: none;
-  background: #0B6623;
-  color: #ffffff;
-  box-shadow: 0 12px 24px rgba(0,0,0,0.4);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
 }
