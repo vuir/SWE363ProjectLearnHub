@@ -25,7 +25,7 @@ export default function StudentJoinSession() {
   const tutorName = session?.tutorName || session?.totre?.replace("By ", "") || "Tutor";
   const description = session?.sessionDesc || session?.description || "Description about the meeting";
 
-  const handleJoin = async () => {
+ const handleJoin = async () => {
   try {
     const token = localStorage.getItem("token");
 
@@ -34,7 +34,7 @@ export default function StudentJoinSession() {
       return;
     }
 
-    const res = await fetch("http://localhost:5000/api/booking/create", {
+    const res = await fetch("http://localhost:5000/api/bookings/create", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
