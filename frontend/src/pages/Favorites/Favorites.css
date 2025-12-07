@@ -1,9 +1,7 @@
 
 .fav-wrap {
-  min-height: 100vh;
-  padding: 20px;
+  /* Uses unified wrap pattern from index.css */
   max-width: 1200px;
-  margin: 0 auto;
 }
 
 .fav-top { margin-bottom: 8px; }

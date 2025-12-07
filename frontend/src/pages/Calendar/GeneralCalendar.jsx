@@ -568,7 +568,7 @@ useEffect(() => {
         </div>
       )}
 
-      <section className="calendar-bottom-nav">
+      <section className="unified-home-bottom-nav calendar-bottom-nav">
         <button className="calendar-more-btn" onClick={handleMoreClick}>
           <MoreVertIcon />
           <span>More</span>

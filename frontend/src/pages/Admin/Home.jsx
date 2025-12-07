@@ -37,6 +37,7 @@ export default function AdminHome() {
     time: "",
     totre: ""
   });
+  const [editedCourseDisplays, setEditedCourseDisplays] = useState({});
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -93,9 +94,12 @@ export default function AdminHome() {
   const handleEditCourse = (course, e) => {
     e.stopPropagation();
     setEditingCourse(course);
+    // Use display values if edited, otherwise use original
+    const displayCode = course.courseId || "";
+    const displayTitle = course.department || course.title || "";
     setEditForm({
-      id: course.courseId || "",
-      title: course.department || course.title || "",
+      id: displayCode,
+      title: displayTitle,
       icon: course.icon,
       time: "",
       totre: ""
@@ -112,25 +116,24 @@ export default function AdminHome() {
       alert("Please fill in all required fields.");
       return;
     }
-    const subjectPrefix = editingCourse.courseId || "";
-    setCourses(courses.map(c => {
-      const courseId = c.courseId || "";
-      const courseSubject = courseId.split(" ")[0];
-      if (courseSubject === subjectPrefix) {
-        // Update all courses with this subject prefix
-        const courseNumber = courseId.split(" ")[1] || "";
-        return { 
-          ...c, 
-          courseId: editForm.id + (courseNumber ? ` ${courseNumber}` : ""), 
-          department: editForm.title,
-          title: c.title
-        };
+    const originalSubject = editingCourse.originalCourseId || editingCourse.courseId || "";
+    const subjectPrefix = originalSubject.toUpperCase();
+    
+    const displayCodeMatch = editForm.id.trim().match(/^([A-Za-z]+)/);
+    const displayCode = displayCodeMatch ? displayCodeMatch[1].toUpperCase() : editForm.id.trim().toUpperCase();
+    
+    // Store the edited display values
+    setEditedCourseDisplays(prev => ({
+      ...prev,
+      [subjectPrefix]: {
+        displayCode: displayCode,
+        displayTitle: editForm.title.trim()
       }
-      return c;
     }));
+    
     setEditingCourse(null);
     setEditForm({ id: "", title: "", icon: null, time: "", totre: "" });
-    alert("Course updated successfully");
+    alert("Course display updated successfully");
   };
 
   const handleConfirmDeleteCourse = async () => {
@@ -139,10 +142,9 @@ export default function AdminHome() {
     try {
       const token = localStorage.getItem("token");
 
+      const originalSubject = deletingCourse.originalCourseId || deletingCourse.courseId || "";
+      const subjectPrefix = originalSubject.toUpperCase();
       
-      const subjectPrefix = (deletingCourse.courseId || "").toUpperCase();
-      
-      // Find all courses that match this subject prefix 
       const coursesToDelete = courses.filter(c => {
         const courseId = c.courseId || "";
         const match = courseId.match(/^([A-Za-z]+)/);
@@ -305,6 +307,16 @@ export default function AdminHome() {
     )
   }
 
+  const get_Filterd_sessions=(qurey,sessions)=>{  
+    if(!qurey || qurey.trim() === " "){
+      return sessions;
+    }
+    const queryLower = qurey.toLowerCase().trim();
+    return sessions.filter(session=>
+      session.tutorName && session.tutorName.toLowerCase().includes(queryLower)
+    )
+  }
+
   // Get unique icon for each course prefix
   const getIconForSubject = (subject) => {
     const upperSubject = subject.toUpperCase();
@@ -349,6 +361,23 @@ export default function AdminHome() {
 
   const Filterd_courses=get_Filterd_courses(qurey,courses)
   const uniqueSubjects = getUniqueSubjects(Filterd_courses)
+  const Filterd_sessions=get_Filterd_sessions(qurey,sessions)
+  
+  const displaySubjects = uniqueSubjects.map(subject => {
+    const originalSubject = subject.courseId.toUpperCase();
+    const edited = editedCourseDisplays[originalSubject];
+    
+    if (edited) {
+      return {
+        ...subject,
+        originalCourseId: subject.courseId,
+        courseId: edited.displayCode, // This will be used for display in CourseCard
+        department: edited.displayTitle,
+        title: edited.displayTitle
+      };
+    }
+    return subject;
+  });
 
   return (
     <main className="wrap">
@@ -368,8 +397,8 @@ export default function AdminHome() {
       </div>
       <br></br>
       <section className="grid">
-        {uniqueSubjects.map((course, idx) => (
-          <div key={course.courseId} style={{ position: 'relative' }}>
+        {displaySubjects.map((course, idx) => (
+          <div key={course.originalCourseId || course.courseId} style={{ position: 'relative' }}>
             <div onClick={(e) => isEditCourses && e.stopPropagation()}>
               <CourseCard
                 course={course}
@@ -401,7 +430,7 @@ export default function AdminHome() {
       </div>
       <br></br>
       <section className="sessions">
-        {sessions.slice(0,4).map((seaion, idx) => (
+        {Filterd_sessions.slice(0,4).map((seaion, idx) => (
           <div key={seaion.id} style={{ position: 'relative' }}>
             <div onClick={(e) => isEditSessions && e.stopPropagation()}>
               <TutorSessions

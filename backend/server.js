@@ -46,6 +46,9 @@ app.use("/api/favorites", require("./route/favoriteRoutes"));
 // review routes
 app.use("/api/reviews", require("./route/reviewRoutes"));
 
+// analytics routes
+app.use("/api/analytics", require("./route/analyticsRoute"));
+
 // test route
 app.get("/", (req, res) => {
 	res.json({ message: "backend is running well!" });

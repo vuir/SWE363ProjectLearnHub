@@ -109,8 +109,8 @@ export default function Admin() {
           </div>
         )}
       </section>
-      <section className="apply-session-bottom-nav">
-        <button className="apply-session-home-btn">
+      <section className="unified-home-bottom-nav">
+        <button className="unified-home-btn">
           <Link to={getHomeRoute()}>
             <HomeIcon />
           </Link>

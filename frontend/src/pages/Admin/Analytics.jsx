@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../Analytics/AnalyticsPage.css";
 import BarChartIcon from "@mui/icons-material/BarChart";
@@ -7,19 +7,54 @@ import { getHomeRoute } from "../../utils/getHomeRoute";
 import ToolBar from "../../components/ToolBar";
 import { getToolBarData } from "../../utils/getToolBarData";
 
+const API_BASE_URL = "http://localhost:5000/api";
+
 export default function AdminAnalytics() {
   const [sideBar, setSideBar] = useState(false);
+  const [stats, setStats] = useState([
+    { id: 1, label: "Total Sessions", value: 0, icon: <BarChartIcon /> },
+    { id: 2, label: "Total Enrollments", value: 0, icon: <BarChartIcon /> },
+    { id: 3, label: "Average Rating", value: 0, icon: <BarChartIcon /> },
+    { id: 4, label: "Active Tutors", value: 0, icon: <BarChartIcon /> },
+  ]);
+  const [loading, setLoading] = useState(true);
   
   const click_sideBar = () => {
     setSideBar((prevState) => !prevState);
   };
-  
-  const stats = [
-    { id: 1, label: "Total Sessions", value: 2, icon: <BarChartIcon /> },
-    { id: 2, label: "Total Enrollments", value: 20, icon: <BarChartIcon /> },
-    { id: 3, label: "Average Rating", value: 4.5, icon: <BarChartIcon /> },
-    { id: 4, label: "Active Tutors", value: 5, icon: <BarChartIcon /> },
-  ];
+
+  useEffect(() => {
+    const fetchAnalytics = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const res = await fetch(`${API_BASE_URL}/analytics`, {
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json"
+          }
+        });
+
+        if (!res.ok) {
+          throw new Error("Failed to fetch analytics");
+        }
+
+        const data = await res.json();
+        
+        setStats([
+          { id: 1, label: "Total Sessions", value: data.totalSessions || 0, icon: <BarChartIcon /> },
+          { id: 2, label: "Total Enrollments", value: data.totalEnrollments || 0, icon: <BarChartIcon /> },
+          { id: 3, label: "Average Rating", value: data.averageRating || 0, icon: <BarChartIcon /> },
+          { id: 4, label: "Active Tutors", value: data.activeTutors || 0, icon: <BarChartIcon /> },
+        ]);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching analytics:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchAnalytics();
+  }, []);
 
   const subjects = [
     { id: 1, name: "MATH 101", height: "20%" },

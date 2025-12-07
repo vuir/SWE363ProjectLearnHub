@@ -5,11 +5,86 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: #f6faf6;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+
+/* Common page wrapper - use for all pages with toolbar */
+.page-wrap,
+.unified-wrap,
+.wrap {
+  padding-top: 76px; /* Space for toolbar */
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 100px; /* Space for home button */
+  min-height: 100vh;
+  max-width: 1400px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  position: relative;
+  width: 100%;
+}
+
+/* For pages with toolbar - same as above */
+.page-wrap-with-toolbar {
+  padding-top: 76px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 100px;
+  min-height: 100vh;
+  max-width: 1400px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  position: relative;
+  width: 100%;
+}
+
+/* For pages without toolbar (like login) */
+.page-wrap-no-toolbar {
+  padding: 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 1400px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* Standard wrap pattern for all page-specific wraps */
+[class*="-wrap"] {
+  width: 100%;
+  padding-top: 76px; /* Space for toolbar */
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 100px; /* Space for home button */
+  min-height: 100vh;
+  max-width: 1400px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  position: relative;
+}
+
+/* Common content container */
+.page-content {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Common section spacing */
+.page-section {
+  margin-bottom: 32px;
+}
+
+.page-section:last-child {
+  margin-bottom: 0;
 }
 
 /* Unified Home Button Styles */
@@ -63,4 +138,47 @@ code {
   left: 50%;
   transform: translateX(-50%);
   z-index: 100;
+  width: 100%;
+  pointer-events: none; /* Allow clicks through container */
+}
+
+.unified-home-bottom-nav button {
+  pointer-events: auto; /* Re-enable clicks on button */
+}
+
+/* Responsive adjustments for home button */
+@media (max-width: 600px) {
+  .unified-home-bottom-nav {
+    bottom: 20px;
+  }
+  
+  .unified-home-btn {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .unified-home-btn svg {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 992px) {
+  .page-wrap,
+  .page-wrap-with-toolbar,
+  .unified-wrap {
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-bottom: 90px;
+  }
+}
+
+@media (max-width: 600px) {
+  .page-wrap,
+  .page-wrap-with-toolbar,
+  .unified-wrap {
+    padding-left: 14px;
+    padding-right: 14px;
+    padding-top: 70px;
+    padding-bottom: 80px;
+  }
 }

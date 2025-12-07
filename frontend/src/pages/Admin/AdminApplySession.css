@@ -1,9 +1,5 @@
 .admin-apply-wrap {
-  width: 100%;
-  padding: 100px 18px 26px;
-  min-height: 100vh;
   background: #ffffff;
-  position: relative;
   color: #1e1e1e;
 }
 
@@ -172,54 +168,6 @@
 .admin-apply-delete-btn:active {
   transform: translateY(0);
   box-shadow: 0 10px 22px rgba(0, 0, 0, 0.35);
-}
-
-/* Home Icon at Bottom */
-.admin-apply-bottom-nav {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 70px;
-}
-
-.admin-apply-home-btn {
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  border: none;
-  background: #0B6623;
-  color: #ffffff;
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  font-size: 24px;
-  transition: all 0.2s ease;
-}
-
-.admin-apply-home-btn:hover {
-  background: #56B46F;
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
-  transform: translateY(-2px);
-}
-
-.admin-apply-home-btn:active {
-  transform: translateY(0);
-}
-
-.admin-apply-home-btn a {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #ffffff;
-  text-decoration: none;
-  width: 100%;
-  height: 100%;
-}
-
-.admin-apply-home-btn svg {
-  font-size: 24px;
 }
 
 /* Edit Modal */

@@ -8,6 +8,10 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import HomeIcon from "@mui/icons-material/Home";
 import CalculateIcon from "@mui/icons-material/Calculate";
+import TerminalIcon from "@mui/icons-material/Terminal";
+import ScienceIcon from "@mui/icons-material/Science";
+import EngineeringIcon from "@mui/icons-material/PrecisionManufacturing";
+import SchoolIcon from "@mui/icons-material/School";
 import { getHomeRoute } from "../../utils/getHomeRoute";
 import "./SubjectCourses.css";
 
@@ -102,7 +106,19 @@ export default function SubjectCourses() {
   };
 
   const getSubjectIcon = () => {
-    return <CalculateIcon />;
+    if (!subject) return <SchoolIcon />;
+    const upperSubject = subject.toUpperCase();
+    if (upperSubject.startsWith("ICS") || upperSubject.startsWith("COE") || upperSubject.startsWith("SWE") || upperSubject.startsWith("CS")) {
+      return <TerminalIcon />;
+    } else if (upperSubject.startsWith("MATH") || upperSubject.startsWith("STAT")) {
+      return <CalculateIcon />;
+    } else if (upperSubject.startsWith("PHYS") || upperSubject.startsWith("CHEM") || upperSubject.startsWith("BIO")) {
+      return <ScienceIcon />;
+    } else if (upperSubject.startsWith("EE") || upperSubject.startsWith("ME") || upperSubject.startsWith("CE")) {
+      return <EngineeringIcon />;
+    } else {
+      return <SchoolIcon />;
+    }
   };
 
   const filteredCourses = useMemo(() => {

@@ -1,9 +1,6 @@
 .apply-session-wrap {
-  width: 100%;
-  padding: 100px 18px 26px;
-  min-height: 100vh;
+  /* Uses unified wrap pattern from index.css */
   background: #ffffff;
-  position: relative;
   color: #1e1e1e;
 }
 
@@ -113,52 +110,9 @@
 }
 
 /* Home Icon at Bottom */
-.apply-session-bottom-nav {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 70px;
-}
+/* Bottom nav styles moved to index.css - use .unified-home-bottom-nav */
 
-.apply-session-home-btn {
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  border: none;
-  background: #0B6623;
-  color: #ffffff;
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  font-size: 24px;
-  transition: all 0.2s ease;
-}
-
-.apply-session-home-btn:hover {
-  background: #56B46F;
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
-  transform: translateY(-2px);
-}
-
-.apply-session-home-btn:active {
-  transform: translateY(0);
-}
-
-.apply-session-home-btn a {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #ffffff;
-  text-decoration: none;
-  width: 100%;
-  height: 100%;
-}
-
-.apply-session-home-btn svg {
-  font-size: 24px;
-}
+/* Home button styles moved to index.css - use .unified-home-btn */
 
 /* Responsive adjustments */
 @media (max-width: 480px) {

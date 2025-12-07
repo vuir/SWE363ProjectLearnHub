@@ -81,6 +81,17 @@ export default function StudentHome() {
     )
   }
 
+  const get_Filterd_sessions=(qurey,sessions)=>{  
+    if(!qurey || qurey.trim() === " "){
+      return sessions;
+    }
+    // Only filter by tutor name, not by session title or courseId
+    const queryLower = qurey.toLowerCase().trim();
+    return sessions.filter(session=>
+      session.tutorName && session.tutorName.toLowerCase().includes(queryLower)
+    )
+  }
+
   // Get unique icon for each course prefix
   const getIconForSubject = (subject) => {
     const upperSubject = subject.toUpperCase();
@@ -101,8 +112,7 @@ export default function StudentHome() {
     const subjectMap = new Map();
     coursesList.forEach(course => {
       const courseId = course.courseId || "";
-      // Extract subject prefix - get all letters before any numbers or spaces
-      // Handles formats like "ICS201", "ICS 201", "MATH101", etc.
+      // Extract subject prefix 
       const match = courseId.match(/^([A-Za-z]+)/);
       const subject = match ? match[1].toUpperCase() : "";
       
@@ -126,6 +136,7 @@ export default function StudentHome() {
 
   const Filterd_courses=get_Filterd_courses(qurey,courses)
   const uniqueSubjects = getUniqueSubjects(Filterd_courses)
+  const Filterd_sessions=get_Filterd_sessions(qurey,sessions)
 
   return (
     <main className="wrap">
@@ -157,7 +168,7 @@ export default function StudentHome() {
       </div>
       <br></br>
       <section className="sessions">
-        {sessions.slice(0, 4).map((seaion, idx) => (
+        {Filterd_sessions.slice(0, 4).map((seaion, idx) => (
           <TutorSessions
             key={seaion._id}
             seesion={seaion}

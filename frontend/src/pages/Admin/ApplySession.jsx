@@ -189,8 +189,8 @@ export default function AdminApplySession() {
       </section>
 
       {/* Home Icon at Bottom */}
-      <section className="admin-apply-bottom-nav">
-        <button className="admin-apply-home-btn">
+      <section className="unified-home-bottom-nav">
+        <button className="unified-home-btn">
           <Link to={getHomeRoute()}>
             <HomeIcon />
           </Link>

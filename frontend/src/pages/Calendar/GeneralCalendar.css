@@ -1,7 +1,5 @@
 .general-calendar-wrap {
-  min-height: 100vh;
   background: #ffffff;
-  padding: 20px 16px 100px;
   color: #000000;
 }
 
@@ -213,14 +211,10 @@
 }
 
 .calendar-bottom-nav {
-  position: fixed;
-  bottom: 24px;
-  left: 50%;
-  transform: translateX(-50%);
+  /* Extends unified-home-bottom-nav for multiple buttons */
   display: flex;
   align-items: center;
   gap: 16px;
-  z-index: 100;
 }
 
 .calendar-bottom-nav .unified-home-btn {
@@ -258,35 +252,7 @@
   font-size: 18px;
 }
 
-.calendar-home-btn {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: #70b476;
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  transition: transform 0.2s;
-}
-
-.calendar-home-btn:hover {
-  transform: scale(1.05);
-}
-
-.calendar-home-btn a {
-  color: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-}
-
-.calendar-home-btn svg {
-  font-size: 28px;
-}
+/* Home button styles moved to index.css - use .unified-home-btn */
 
 /* Add Session Button */
 .calendar-add-session-btn {
